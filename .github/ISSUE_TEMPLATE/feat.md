@@ -1,5 +1,5 @@
 ---
-name: 기능 구현 템플릿
+name: feat
 about: 기능 구현 템플릿입니다
 title: "[FEAT] 로그인을 구현한다."
 labels: FEAT
