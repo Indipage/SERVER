@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class IndipageApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IndipageApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IndipageApplication.class, args);
+        System.out.println("print for test CI");
+    }
 
 }
