@@ -3,7 +3,7 @@ name: INDIPAGE-Server CD
 
 on:
   push:
-    branches: [ develop ] # main branch로 push 될 때 실행됩니다.
+    branches: [ develop, chore/#1 ] # main branch로 push 될 때 실행됩니다.
 
 env:
   S3_BUCKET_NAME: build
