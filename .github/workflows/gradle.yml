@@ -9,9 +9,9 @@ name: INDIPAGE-Server CI
 
 on:
   push:
-    branches: [ "develop"]
+    branches: [ "develop", "chore/#1" ]
   pull_request:
-    branches: [ "develop"]
+    branches: [ "develop", "chore/#1" ]
 
 permissions:
   contents: read
@@ -39,7 +39,7 @@ jobs:
           cat ./application.yaml
         shell: bash
 
-      - name : Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
