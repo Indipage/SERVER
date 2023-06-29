@@ -13,7 +13,7 @@ public enum Error {
      * 400 BAD REQUEST
      */
     REQUEST_VALIDATION_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 요청입니다"),
-
+    INVALID_MULTIPART_EXTENSION_EXCEPTION(HttpStatus.BAD_REQUEST, "지원하지 않는 이미지 형식입니다"),
     /**
      * 401 UNAUTHORIZED
      */
@@ -21,7 +21,8 @@ public enum Error {
     /**
      * 404 NOT FOUND
      */
-
+    NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "이미지가 입력되지 않았습니다"),
+    NOT_FOUND_SAVED_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "저장된 이미지가 없습니다"),
     /**
      * 409 CONFLICT
      */
