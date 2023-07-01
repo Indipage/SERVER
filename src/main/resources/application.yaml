@@ -1,4 +1,12 @@
 spring:
+  profiles:
+    active: local
+
+# local
+---
+spring:
+  profiles: local
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${db-url}
@@ -28,6 +36,105 @@ cloud:
     stack:
       auto: false
 
+springdoc:
+  packages-to-scan: indipage.org.indipage
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+    cache:
+      disabled: true
+
+# set1
+---
+
+spring:
+  profiles: set1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${db-url}
+    username: ${db-username}
+    password: ${db-password}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${s3-access-key}
+      secretKey: ${s3-secret-key}
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: ${s3-bucket}
+    stack:
+      auto: false
+
+
+springdoc:
+  packages-to-scan: indipage.org.indipage
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+    cache:
+      disabled: true
+
+
+# set2
+---
+
+spring:
+  profiles: set2
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${db-url}
+    username: ${db-username}
+    password: ${db-password}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${s3-access-key}
+      secretKey: ${s3-secret-key}
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: ${s3-bucket}
+    stack:
+      auto: false
 
 springdoc:
   packages-to-scan: indipage.org.indipage
