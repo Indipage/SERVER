@@ -6,7 +6,7 @@ on:
     branches: [ develop, chore/#1 ] # main branch로 push 될 때 실행됩니다.
 
 env:
-  S3_BUCKET_NAME: build
+  S3_BUCKET_NAME: {{secrets.BUCKET_NAME_FOR_DEPLOY}}
 
 jobs:
   build:
