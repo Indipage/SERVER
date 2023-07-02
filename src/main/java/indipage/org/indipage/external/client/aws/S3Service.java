@@ -57,10 +57,10 @@ public class S3Service {
 
         try (InputStream inputStream = multipartFile.getInputStream()) {
             amazonS3.putObject(
-                    new PutObjectRequest(bucket + "/dev/" + folder + "/image", fileName, inputStream,
+                    new PutObjectRequest(bucket + folder + "/image", fileName, inputStream,
                             objectMetadata).withCannedAcl(
                             CannedAccessControlList.PublicRead));
-            return amazonS3.getUrl(bucket + "/dev/" + folder + "/image", fileName).toString();
+            return amazonS3.getUrl(bucket + folder + "/image", fileName).toString();
 
         } catch (IOException e) {
             throw new NotFoundException(Error.NOT_FOUND_SAVED_IMAGE_EXCEPTION,
