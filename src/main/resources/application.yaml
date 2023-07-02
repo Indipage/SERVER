@@ -71,7 +71,7 @@ spring:
         format_sql: true
 
 server:
-  port: 8080
+  port: 8081
 
 cloud:
   aws:
@@ -84,7 +84,6 @@ cloud:
       bucket: ${s3-bucket}
     stack:
       auto: false
-
 
 springdoc:
   packages-to-scan: indipage.org.indipage
@@ -99,7 +98,6 @@ springdoc:
       enabled: true
     cache:
       disabled: true
-
 
 # set2
 ---
@@ -122,7 +120,7 @@ spring:
         format_sql: true
 
 server:
-  port: 8080
+  port: 8082
 
 cloud:
   aws:
