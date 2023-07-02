@@ -27,7 +27,10 @@ public enum Error {
      * 409 CONFLICT
      */
 
-
+    /**
+     * 413 PAYLOAD_TOO_LARGE
+     */
+    IMAGE_TOO_LARGE_EXCEPTION(HttpStatus.PAYLOAD_TOO_LARGE, "업로드 가능한 이미지 최대 용량은 3MB입니다."),
     /**
      * 500 INTERNAL SERVER ERROR
      */

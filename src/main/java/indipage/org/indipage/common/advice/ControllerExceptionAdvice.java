@@ -15,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Slf4j
 @RestControllerAdvice
@@ -31,6 +32,16 @@ public class ControllerExceptionAdvice {
         FieldError fieldError = Objects.requireNonNull(e.getFieldError());
         return ApiResponse.error(Error.REQUEST_VALIDATION_EXCEPTION,
                 String.format("%s는 %s", fieldError.getField(), fieldError.getDefaultMessage()));
+    }
+
+    /**
+     * 413 PAYLOAD_TOO_LARGE
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public ApiResponse fileSizeLimitExceeded(final MaxUploadSizeExceededException e) {
+        return ApiResponse.error(Error.IMAGE_TOO_LARGE_EXCEPTION,
+                String.format(Error.IMAGE_TOO_LARGE_EXCEPTION.getMessage()));
     }
 
     /**
