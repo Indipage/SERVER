@@ -40,7 +40,7 @@ public class S3Service {
     private String region;
 
     private final ArrayList<String> allowedFileExtension = new ArrayList<>(
-            List.of(".jpg", "jpeg", ".png", ".JPG", ".JPEG", ".PNG"));
+            List.of(".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG"));
 
     @PostConstruct
     public AmazonS3Client amazonS3Client() {
