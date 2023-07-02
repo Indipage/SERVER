@@ -5,6 +5,9 @@ import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.CustomException;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -13,8 +16,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Slf4j
 @RestControllerAdvice
 public class ControllerExceptionAdvice {
+
+    private final Logger logger = LoggerFactory.getLogger(ControllerExceptionAdvice.class);
 
     /**
      * 400 BAD_REQUEST
@@ -33,7 +39,7 @@ public class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     protected ApiResponse<Object> handleException(final Exception e) {
-        System.out.println(e.getClass() + ": " + e.getMessage());
+        logger.error("{} : {}", e.getClass(), e.getMessage());
         return ApiResponse.error(Error.INTERNAL_SERVER_ERROR);
     }
 
