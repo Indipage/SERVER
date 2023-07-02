@@ -87,5 +87,5 @@ jobs:
           --application-name indipag-server-codedeploy
           --deployment-group-name indipage-sever-codedeploy-group
           --file-exists-behavior OVERWRITE
-          --s3-location bucket=indipage/build,bundleType=zip,key=indipage_server.zip
+          --s3-location bucket=indipage,bundleType=zip,key=build/indipage_server.zip
           --region ap-northeast-2
