@@ -9,9 +9,9 @@ name: INDIPAGE-Server CI
 
 on:
   push:
-    branches: [ "develop", "chore/#1" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "develop", "chore/#1" ]
+    branches: [ "develop" ]
 
 permissions:
   contents: read
