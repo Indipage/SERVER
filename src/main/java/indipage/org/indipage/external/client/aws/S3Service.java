@@ -10,7 +10,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.BadRequestException;
-import indipage.org.indipage.exception.model.NotFoundException;
+import indipage.org.indipage.exception.model.CustomException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ public class S3Service {
             return amazonS3.getUrl(bucket + folder + "/image", fileName).toString();
 
         } catch (IOException e) {
-            throw new NotFoundException(Error.NOT_FOUND_SAVED_IMAGE_EXCEPTION,
-                    Error.NOT_FOUND_SAVED_IMAGE_EXCEPTION.getMessage());
+            throw new CustomException(Error.IMAGE_CREATE_FAIL_EXCEPTION,
+                    Error.IMAGE_CREATE_FAIL_EXCEPTION.getMessage());
         }
     }
 
@@ -74,7 +74,8 @@ public class S3Service {
 
     private String getFileExtension(String fileName) {
         if (fileName.length() == 0) {
-            throw new NotFoundException(Error.NOT_FOUND_IMAGE_EXCEPTION, Error.NOT_FOUND_IMAGE_EXCEPTION.getMessage());
+            throw new CustomException(Error.NO_IMAGE_FILENAME_EXCEPTION,
+                    Error.NO_IMAGE_FILENAME_EXCEPTION.getMessage());
         }
         String idxFileName = fileName.substring(fileName.lastIndexOf("."));
         if (!allowedFileExtension.contains(idxFileName)) {

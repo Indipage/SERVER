@@ -21,8 +21,7 @@ public enum Error {
     /**
      * 404 NOT FOUND
      */
-    NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "이미지가 입력되지 않았습니다"),
-    NOT_FOUND_SAVED_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "저장된 이미지가 없습니다"),
+
     /**
      * 409 CONFLICT
      */
@@ -34,6 +33,8 @@ public enum Error {
     /**
      * 500 INTERNAL SERVER ERROR
      */
+    IMAGE_CREATE_FAIL_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다"),
+    NO_IMAGE_FILENAME_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "저장할 이미지 명이 비어있습니다"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 서버 에러가 발생했습니다"),
     ;
 
