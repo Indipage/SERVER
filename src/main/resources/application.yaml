@@ -5,8 +5,10 @@ spring:
 # local
 ---
 spring:
-  profiles: local
-
+  config:
+    activate:
+      on-profile: local
+      
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${db-url}
@@ -54,7 +56,9 @@ springdoc:
 ---
 
 spring:
-  profiles: set1
+  config:
+    activate:
+      on-profile: set1
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -103,8 +107,10 @@ springdoc:
 ---
 
 spring:
-  profiles: set2
-
+  config:
+    activate:
+      on-profile: set2
+      
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${db-url}
