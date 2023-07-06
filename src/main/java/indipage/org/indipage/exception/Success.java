@@ -13,11 +13,11 @@ public enum Success {
      * 200 OK
      */
     LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
-
     /**
      * 201 CREATED
      */
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입이 완료됐습니다."),
+    CREATE_IMAGE_SUCCESS(HttpStatus.CREATED, "이미지 업로드를 완료했습니다.")
     ;
 
     private final HttpStatus httpStatus;
