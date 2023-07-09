@@ -3,6 +3,7 @@ package indipage.org.indipage.domain;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
 import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
+import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,7 @@ public class User extends CreatedTimeBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<InviteSpaceRelation> inviteSpaceRelations = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<SpaceBookmarkRelation> spaceBookmarkRelations = new ArrayList<>();
 }
