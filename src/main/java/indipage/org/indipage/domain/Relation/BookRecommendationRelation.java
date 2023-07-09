@@ -17,12 +17,15 @@ public class BookRecommendationRelation {
     BookRecommendationRelationId bookRecommendationRelationId;
 
     @ManyToOne
-    @MapsId("space_id")
+    @MapsId("spaceId")
     @JoinColumn(name = "space_id")
     private Space space;
 
     @ManyToOne
-    @MapsId("book_id")
+    @MapsId("bookId")
     @JoinColumn(name = "book_id")
     private Book book;
+
+    @Column(nullable = false)
+    private String comment;
 }

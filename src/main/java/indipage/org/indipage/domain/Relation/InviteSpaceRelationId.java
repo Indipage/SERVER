@@ -5,13 +5,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
-public class FollowSpaceRelationId implements Serializable {
+public class InviteSpaceRelationId implements Serializable {
+
+
+    @EmbeddedId
+    InviteSpaceRelationId inviteSpaceRelationId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

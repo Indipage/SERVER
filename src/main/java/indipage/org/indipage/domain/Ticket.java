@@ -19,4 +19,8 @@ public class Ticket {
 
     @Column(nullable = false)
     private String cardImageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "space_id")
+    private Space space;
 }

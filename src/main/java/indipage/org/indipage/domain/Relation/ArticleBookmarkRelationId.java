@@ -6,16 +6,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
-public class FollowSpaceRelationId implements Serializable {
+public class ArticleBookmarkRelationId implements Serializable {
+
+    @Column(name = "article_id", nullable = false)
+    private Long articleId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
-
-    @Column(name = "space_id", nullable = false)
-    private UUID spaceId;
 }
