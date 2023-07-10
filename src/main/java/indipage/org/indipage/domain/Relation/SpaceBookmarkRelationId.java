@@ -1,12 +1,11 @@
 package indipage.org.indipage.domain.Relation;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
