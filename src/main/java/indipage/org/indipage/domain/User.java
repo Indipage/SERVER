@@ -29,9 +29,9 @@ public class User extends CreatedTimeBaseEntity {
     @Column
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<ArticleBookmarkRelation> articleBookmarkRelations = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<SpaceBookmarkRelation> spaceBookmarkRelations = new ArrayList<>();
 }

@@ -57,9 +57,9 @@ public class Space {
     @Column
     private String peculiarityContent;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "space")
     private List<BookRecommendationRelation> bookRecommendationRelations = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "space")
     private List<SpaceTagRelation> spaceTagRelations = new ArrayList<>();
 }
