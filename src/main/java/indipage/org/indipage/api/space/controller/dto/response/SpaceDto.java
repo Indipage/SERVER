@@ -24,8 +24,8 @@ public class SpaceDto {
     private String closedDays;
     private String introduction;
     private String peculiarityTitle;
-    private String pecularityContent;
-    private String pecularityImageUrl;
+    private String peculiarityContent;
+    private String peculiarityImageUrl;
 
     public static SpaceDto of(Space space) {
 
