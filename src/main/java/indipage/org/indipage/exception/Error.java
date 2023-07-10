@@ -21,7 +21,7 @@ public enum Error {
     /**
      * 404 NOT FOUND
      */
-    NOT_FOUND_SPACE_EXCEPTION(HttpStatus.NOT_FOUND, "해당 id를 갖는 공간이 존재하지 않습니다"),
+    NOT_FOUND_SPACE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 공간입니다."),
     /**
      * 409 CONFLICT
      */
