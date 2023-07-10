@@ -1,6 +1,6 @@
 package indipage.org.indipage.api.user.controller;
 
-import indipage.org.indipage.api.user.controller.dto.response.UserResponseDto;
+import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<UserResponseDto> readUser() {
+    public ApiResponse<UserDto> readUser() {
         return ApiResponse.success(Success.READ_USER_SUCCESS, userService.readUser(1L));
     }
 }

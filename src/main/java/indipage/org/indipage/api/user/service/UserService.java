@@ -1,6 +1,6 @@
 package indipage.org.indipage.api.user.service;
 
-import indipage.org.indipage.api.user.controller.dto.response.UserResponseDto;
+import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.domain.User;
 import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserResponseDto readUser(final Long userId) {
+    public UserDto readUser(final Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION,
                         Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
 
-        return UserResponseDto.of(user);
+        return UserDto.of(user);
     }
 }
