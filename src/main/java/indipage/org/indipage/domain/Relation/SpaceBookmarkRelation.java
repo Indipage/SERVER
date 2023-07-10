@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SpaceBookmarkRelation extends CreatedTimeBaseEntity {
     @EmbeddedId
-    SpaceBookmarkRelationId spaceBookmarkRelationId;
+    private SpaceBookmarkRelationId spaceBookmarkRelationId;
 
     @MapsId("spaceId")
     @ManyToOne

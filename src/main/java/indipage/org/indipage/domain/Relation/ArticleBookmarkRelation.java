@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class ArticleBookmarkRelation extends CreatedTimeBaseEntity {
 
     @EmbeddedId
-    ArticleBookmarkRelationId articleBookmarkRelationId;
+    private ArticleBookmarkRelationId articleBookmarkRelationId;
 
     @MapsId("articleId")
     @ManyToOne

@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class FollowSpaceRelation {
 
     @EmbeddedId
-    FollowSpaceRelationId followSpaceRelationId;
+    private FollowSpaceRelationId followSpaceRelationId;
 
     @ManyToOne
     @MapsId("userId")

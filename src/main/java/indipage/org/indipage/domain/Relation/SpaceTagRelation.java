@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class SpaceTagRelation {
 
     @EmbeddedId
-    SpaceTagRelationId spaceTagRelationId;
+    private SpaceTagRelationId spaceTagRelationId;
 
     @ManyToOne
     @MapsId("spaceId")

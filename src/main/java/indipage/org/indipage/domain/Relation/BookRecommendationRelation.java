@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class BookRecommendationRelation {
 
     @EmbeddedId
-    BookRecommendationRelationId bookRecommendationRelationId;
+    private BookRecommendationRelationId bookRecommendationRelationId;
 
     @ManyToOne
     @MapsId("spaceId")

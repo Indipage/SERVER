@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class InviteSpaceRelation extends ModifiedCreatedTimeBaseEntity {
 
     @EmbeddedId
-    InviteSpaceRelationId inviteSpaceRelationId;
+    private InviteSpaceRelationId inviteSpaceRelationId;
 
     @ManyToOne
     @MapsId("userId")
