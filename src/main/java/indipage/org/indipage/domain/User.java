@@ -1,16 +1,19 @@
 package indipage.org.indipage.domain;
 
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
-import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
 import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,12 +31,6 @@ public class User extends CreatedTimeBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<ArticleBookmarkRelation> articleBookmarkRelations = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<FollowSpaceRelation> followSpaceRelations = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<InviteSpaceRelation> inviteSpaceRelations = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<SpaceBookmarkRelation> spaceBookmarkRelations = new ArrayList<>();

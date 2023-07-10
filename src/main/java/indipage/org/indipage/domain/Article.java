@@ -1,13 +1,18 @@
 package indipage.org.indipage.domain;
 
-import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
+import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -28,6 +33,4 @@ public class Article extends CreatedTimeBaseEntity {
     @JoinColumn(name = "space_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private Space space;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<ArticleBookmarkRelation> articleBookmarkRelations = new ArrayList<>();
 }

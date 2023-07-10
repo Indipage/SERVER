@@ -1,24 +1,29 @@
 package indipage.org.indipage.domain;
 
 import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
-import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
 import indipage.org.indipage.domain.Relation.SpaceTagRelation;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Space {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false)
@@ -52,17 +57,8 @@ public class Space {
     @Column
     private String peculiarityContent;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "space")
-    private Article article;
-
     @OneToMany(fetch = FetchType.LAZY)
     private List<BookRecommendationRelation> bookRecommendationRelations = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<FollowSpaceRelation> followSpaceRelations = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<InviteSpaceRelation> inviteSpaceRelations = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<SpaceTagRelation> spaceTagRelations = new ArrayList<>();
