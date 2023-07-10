@@ -7,12 +7,12 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class UserDto {
+public class UserResponseDto {
     private String name;
     private String email;
 
-    public static UserDto of(User user) {
-        return UserDto.builder()
+    public static UserResponseDto of(User user) {
+        return UserResponseDto.builder()
                 .name(user.getName())
                 .email(user.getEmail())
                 .build();
