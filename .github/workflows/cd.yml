@@ -31,8 +31,12 @@ jobs:
 
       # 3) 환경변수 파일 내용 변경
       - name: make application.yaml 파일 내용 변경
-        run: echo "${{ secrets.INDIPAGE_APPLICATION }}" > ./application.yaml
-
+        run: |
+          cd ./src/main/resources
+          
+          echo "${{ secrets.INDIPAGE_APPLICATION }}" > ./application.yaml
+        shell: bash
+        
       # 이 워크플로우는 gradle build
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
