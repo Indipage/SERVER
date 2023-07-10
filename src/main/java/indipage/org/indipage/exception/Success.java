@@ -13,6 +13,7 @@ public enum Success {
      * 200 OK
      */
     LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
+    READ_SPACE_SUCCESS(HttpStatus.OK, "서점 상세정보 조회를 성공했습니다."),
     /**
      * 201 CREATED
      */
