@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum SpaceType {
     독립서점("독립서점"),
-    // 영어 값도 적기
+    // TODO 영어 값도 적기
 
     북카페("북카페 "),
     ;
