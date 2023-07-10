@@ -31,11 +31,7 @@ jobs:
 
       # 3) 환경변수 파일 내용 변경
       - name: make application.yaml 파일 내용 변경
-        run:           
-          # GitHub-Actions 에서 설정한 값을 application.yaml 파일에 쓰기
-          echo "${{ secrets.INDIPAGE_APPLICATION }}" >> ./application.yaml
-        
-        shell: bash
+        run: echo "${{ secrets.INDIPAGE_APPLICATION }}" > ./application.yaml
 
       # 이 워크플로우는 gradle build
       - name: Grant execute permission for gradlew
