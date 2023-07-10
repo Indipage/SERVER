@@ -14,7 +14,7 @@ public class SpaceService {
 
     private final SpaceRepository spaceRepository;
 
-    public SpaceDto readSpace(Long spaceId) {
+    public SpaceDto readSpace(final Long spaceId) {
         Space space = spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
