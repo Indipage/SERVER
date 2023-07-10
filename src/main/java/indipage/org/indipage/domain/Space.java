@@ -4,7 +4,6 @@ import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
 import indipage.org.indipage.domain.Relation.SpaceTagRelation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,8 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Space {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
