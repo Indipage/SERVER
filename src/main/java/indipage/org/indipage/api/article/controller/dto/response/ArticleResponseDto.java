@@ -17,15 +17,16 @@ public class ArticleResponseDto {
     private String content;
     private LocalDateTime createdAt;
 
+    private Long spaceId;
     private String spaceName;
     private String spaceOwner;
-
 
     public static ArticleResponseDto of(Article article, Space space) {
         return ArticleResponseDto.builder().id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
                 .createdAt(article.getCreatedAt())
+                .spaceId(space.getId())
                 .spaceName(space.getName())
                 .spaceOwner(space.getOwner())
                 .build();
