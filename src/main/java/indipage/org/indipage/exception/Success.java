@@ -15,6 +15,7 @@ public enum Success {
     LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
     READ_SPACE_SUCCESS(HttpStatus.OK, "서점 상세정보 조회를 성공했습니다."),
     READ_BOOK_RECOMMENDATION_SUCCESS(HttpStatus.OK, "서점의 추천 서가 조회를 성공했습니다."),
+    READ_USER_SUCCESS(HttpStatus.OK, "사용자 상세정보 조회를 성공했습니다."),
     /**
      * 201 CREATED
      */
