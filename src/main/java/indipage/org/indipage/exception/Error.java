@@ -23,6 +23,7 @@ public enum Error {
      */
     NOT_FOUND_SPACE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 공간입니다."),
     NOT_FOUND_ARTICLE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 아티클입니다."),
+    NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
     /**
      * 409 CONFLICT
      */

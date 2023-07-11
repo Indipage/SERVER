@@ -2,8 +2,12 @@ package indipage.org.indipage.api.space.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import indipage.org.indipage.api.tag.controller.dto.response.TagDto;
 import indipage.org.indipage.domain.Space;
 import indipage.org.indipage.domain.SpaceType;
+import indipage.org.indipage.domain.Tag;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +30,14 @@ public class SpaceDto {
     private String peculiarityTitle;
     private String peculiarityContent;
     private String peculiarityImageUrl;
+    private List<TagDto> tagList;
 
-    public static SpaceDto of(Space space) {
+    public static SpaceDto of(Space space, List<Tag> tagList) {
 
         return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getRoadAddress(),
                 space.getType(), space.getOwner(), space.getOperatingTime(), space.getClosedDays(),
                 space.getIntroduction(), space.getPeculiarityTitle(),
-                space.getPeculiarityContent(), space.getPeculiarityImageUrl());
+                space.getPeculiarityContent(), space.getPeculiarityImageUrl(),
+                tagList.stream().map(TagDto::of).collect(Collectors.toList()));
     }
 }
