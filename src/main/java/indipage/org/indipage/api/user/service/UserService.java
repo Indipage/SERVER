@@ -14,10 +14,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserDto readUser(final Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
+        return UserDto.of(findUser(userId));
+    }
+
+    public User findUser(final Long userId) {
+        return userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION,
                         Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
-
-        return UserDto.of(user);
     }
 }
