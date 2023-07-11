@@ -14,11 +14,14 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    public ArticleResponseDto readArticle(Long articleId) {
-        Article article = articleRepository.findById(articleId).orElseThrow(
+    public ArticleResponseDto readArticle(final Long articleId) {
+        Article article = findArticle(articleId);
+        return ArticleResponseDto.of(article, article.getSpace());
+    }
+
+    public Article findArticle(final Long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_ARTICLE_EXCEPTION.getMessage()));
-
-        return ArticleResponseDto.of(article, article.getSpace());
     }
 }
