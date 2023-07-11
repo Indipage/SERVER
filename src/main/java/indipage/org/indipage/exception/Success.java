@@ -17,6 +17,7 @@ public enum Success {
     READ_BOOK_RECOMMENDATION_SUCCESS(HttpStatus.OK, "서점의 추천 서가 조회를 성공했습니다."),
     READ_ARTICLE_SUCCESS(HttpStatus.OK, "아티클 상세정보 조회를 성공했습니다."),
     READ_USER_SUCCESS(HttpStatus.OK, "사용자 상세정보 조회를 성공했습니다."),
+    READ_IF_USER_HAS_RECEIVED_TICKET_SUCCESS(HttpStatus.OK, "초대장 수령 여부 조회를 성공했습니다."),
     /**
      * 201 CREATED
      */
