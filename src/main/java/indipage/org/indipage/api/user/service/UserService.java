@@ -26,11 +26,13 @@ public class UserService {
     private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
 
     public UserDto readUser(final Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
+        return UserDto.of(findUser(userId));
+    }
+
+    public User findUser(final Long userId) {
+        return userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION,
                         Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
-
-        return UserDto.of(user);
     }
 
     public HasReceivedTicketResponseDto readIfUserHasReceivedTicket(final Long userId, final Long spaceId) {
