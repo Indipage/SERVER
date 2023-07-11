@@ -16,6 +16,7 @@ public class ArticleResponseDto {
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private String thumbnailUrl;
 
     private Long spaceId;
     private String spaceName;
@@ -26,6 +27,7 @@ public class ArticleResponseDto {
                 .title(article.getTitle())
                 .content(article.getContent())
                 .createdAt(article.getCreatedAt())
+                .thumbnailUrl(article.getThumbnailUrl())
                 .spaceId(space.getId())
                 .spaceName(space.getName())
                 .spaceOwner(space.getOwner())
