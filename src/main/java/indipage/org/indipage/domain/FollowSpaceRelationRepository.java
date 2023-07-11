@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface FollowSpaceRelationRepository extends Repository<FollowSpaceRelation, FollowSpaceRelationId> {
     Optional<FollowSpaceRelation> findFollowSpaceRelationByFollowSpaceRelationId(FollowSpaceRelationId followSpaceRelationId);
+
+    void save(FollowSpaceRelation followSpaceRelation);
 }
 

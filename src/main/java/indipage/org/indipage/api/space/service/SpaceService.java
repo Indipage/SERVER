@@ -6,6 +6,7 @@ import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
+import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
 import indipage.org.indipage.domain.Relation.FollowSpaceRelationId;
 import indipage.org.indipage.domain.Relation.SpaceTagRelation;
 import indipage.org.indipage.exception.Error;
@@ -52,6 +53,12 @@ public class SpaceService {
         Space space = findSpace(spaceId);
         User user = userService.findUser(userId);
         return FollowSpaceRelationResponseDto.of(isFollowSpace(userId, spaceId));
+    }
+
+    public void createFollowSpace(final Long userId, final Long spaceId) {
+        User user = userService.findUser(userId);
+        Space space = findSpace(spaceId);
+        followSpaceRelationRepository.save(FollowSpaceRelation.create(user, space));
     }
 
     private Space findSpace(final Long spaceId) {

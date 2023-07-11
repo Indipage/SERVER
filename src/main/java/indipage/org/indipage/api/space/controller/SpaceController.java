@@ -39,4 +39,11 @@ public class SpaceController {
         return ApiResponse.success(Success.READ_FOLLOW_SPACE_SUCCESS,
                 spaceService.readFollowSpace(1L, spaceId));
     }
+
+    @PostMapping("/{spaceId}/follow")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse createFollowSpace(@PathVariable final Long spaceId) {
+        spaceService.createFollowSpace(1L, spaceId);
+        return ApiResponse.success(Success.CREATE_FOLLOW_SPACE_SUCCESS);
+    }
 }

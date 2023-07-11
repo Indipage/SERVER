@@ -24,6 +24,7 @@ public enum Success {
      */
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입이 완료됐습니다."),
     CREATE_IMAGE_SUCCESS(HttpStatus.CREATED, "이미지 업로드를 완료했습니다."),
+    CREATE_FOLLOW_SPACE_SUCCESS(HttpStatus.CREATED, "조르기 등록에 성공했습니다."),
     ;
 
     private final HttpStatus httpStatus;
