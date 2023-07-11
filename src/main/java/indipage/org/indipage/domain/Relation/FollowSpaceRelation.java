@@ -2,17 +2,16 @@ package indipage.org.indipage.domain.Relation;
 
 import indipage.org.indipage.domain.Space;
 import indipage.org.indipage.domain.User;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 @Entity
 @Getter
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FollowSpaceRelation {
 
@@ -28,4 +27,8 @@ public class FollowSpaceRelation {
     @MapsId("spaceId")
     @JoinColumn(name = "space_id")
     private Space space;
+
+    public static FollowSpaceRelation create(User user, Space space) {
+        return new FollowSpaceRelation(new FollowSpaceRelationId(user.getId(), space.getId()), user, space);
+    }
 }
