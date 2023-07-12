@@ -14,6 +14,7 @@ import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.NotFoundException;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +77,27 @@ public class UserService {
 
         // 티켓 수령하기
         inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void visit(final Long userId, final Long spaceId) {
+
+        User user = findUser(userId);
+
+        // TODO: spaceService로 뺀 findSpace 함수 호출
+        Space space = spaceRepository.findById(spaceId).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+
+        // TODO: 티켓 수령 여부 조회 ( 함수 호출 ) -> 없으면 에러 처리
+        InviteSpaceRelation relation = inviteSpaceRelationRepository.findByInviteSpaceRelationId(
+                InviteSpaceRelationId.newInstance(user, space)).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION,
+                        Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION.getMessage()));
+
+        // 방문하기
+        relation.visit();
+        inviteSpaceRelationRepository.save(relation);
     }
 
 }

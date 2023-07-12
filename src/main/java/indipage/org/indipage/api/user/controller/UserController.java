@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,12 @@ public class UserController {
     public ApiResponse receiveTicket(@PathVariable final Long spaceId) {
         userService.receiveTicket(1L, spaceId);
         return ApiResponse.success(Success.CREATE_RECEIVE_TICKET_SUCCESS);
+    }
+
+    @PutMapping("/space/{spaceId}/visit")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse updateVisit(@PathVariable final Long spaceId) {
+        userService.visit(1L, spaceId);
+        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
     }
 }
