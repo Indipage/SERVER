@@ -21,6 +21,7 @@ public enum Success {
     UPDATE_VISIT_SUCCESS(HttpStatus.OK, "공간 방문에 성공했습니다."),
     READ_IF_USER_HAS_RECEIVED_TICKET_SUCCESS(HttpStatus.OK, "티켓 수령 여부 조회를 성공했습니다."),
     READ_ARTICLE_SUMMARY_LIST_SUCCESS(HttpStatus.OK, "아티클 전체 목록 조회에 성공했습니다."),
+    READ_IS_ARTICLE_BOOKMARKED_SUCCESS(HttpStatus.OK, "아티클 북마크 여부 조회 성공"),
     /**
      * 201 CREATED
      */
