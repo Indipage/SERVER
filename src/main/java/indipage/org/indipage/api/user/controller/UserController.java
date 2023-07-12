@@ -6,6 +6,7 @@ import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
+import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,5 +69,12 @@ public class UserController {
     public ApiResponse<IsBookmarkedResponseDto> readIsSpaceBookmarked(@PathVariable Long spaceId) {
         return ApiResponse.success(Success.READ_IS_SPACE_BOOKMARKED_SUCCESS,
                 userService.readIsSpaceBookmarked(1L, spaceId));
+    }
+
+    @PostMapping("/bookmark/space/{spaceId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse createSpaceBookmark(@PathVariable @NotNull Long spaceId) {
+        userService.createSpaceBookmark(1L, spaceId);
+        return ApiResponse.success(Success.CREATE_SPACE_BOOKMARK_SUCCESS);
     }
 }

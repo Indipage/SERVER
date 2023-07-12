@@ -134,6 +134,21 @@ public class UserService {
         return IsBookmarkedResponseDto.of(true);
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public void createSpaceBookmark(final Long userId, final Long spaceId) {
+        User user = findUser(userId);
+        Space space = findSpace(spaceId);
+
+        // 북마크 검사
+        if (isBookMarked(user, space)) {
+            throw new ConflictException(Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION,
+                    Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION.getMessage());
+        }
+
+        SpaceBookmarkRelation relation = SpaceBookmarkRelation.newInstance(space, user);
+        spaceBookmarkRelationRepository.save(relation);
+    }
+
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
