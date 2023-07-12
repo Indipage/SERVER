@@ -1,4 +1,4 @@
-# PPP Club 서버 레포지토리입니다 :)
+<img width="630" alt="스크린샷 2023-07-12 오후 9 46 27" src="https://github.com/Indipage/SERVER/assets/77621712/f6bbc877-dc93-4aa0-b83f-beba73966c6a"># PPP Club 서버 레포지토리입니다 :)
 
 <br>
 
@@ -32,4 +32,7 @@
 | API 개발                         | 정준서, 진승희  |
 
 ## 🛠️ 아키텍처 구조 및 사용 스택
+<img width="630" alt="스크린샷 2023-07-12 오후 9 46 27" src="https://github.com/Indipage/SERVER/assets/77621712/2fa00e1b-83b4-4699-adc3-b6d2ed01eb1c">
+
+
 ---
