@@ -35,7 +35,7 @@ public class UserController {
 
     @PostMapping("/ticket/{spaceId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse receiveTicket(@PathVariable final Long spaceId) {
+    public ApiResponse createReceiveTicket(@PathVariable final Long spaceId) {
         userService.receiveTicket(1L, spaceId);
         return ApiResponse.success(Success.CREATE_RECEIVE_TICKET_SUCCESS);
     }
