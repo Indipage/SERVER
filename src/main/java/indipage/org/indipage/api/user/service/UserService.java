@@ -67,13 +67,8 @@ public class UserService {
     public void visit(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
+        Space space = findSpace(spaceId);
 
-        // TODO: spaceService로 뺀 findSpace 함수 호출
-        Space space = spaceRepository.findById(spaceId).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
-                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
-
-        // TODO: 티켓 수령 여부 조회 ( 함수 호출 ) -> 없으면 에러 처리
         InviteSpaceRelation relation = inviteSpaceRelationRepository.findByInviteSpaceRelationId(
                 InviteSpaceRelationId.newInstance(user, space)).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION,
