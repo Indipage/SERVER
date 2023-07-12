@@ -3,9 +3,17 @@ package indipage.org.indipage.api.user.service;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
-import indipage.org.indipage.domain.*;
+import indipage.org.indipage.domain.InviteSpaceRelationRepository;
+import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
+import indipage.org.indipage.domain.Space;
+import indipage.org.indipage.domain.SpaceRepository;
+import indipage.org.indipage.domain.Ticket;
+import indipage.org.indipage.domain.User;
+import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
+import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final TicketService ticketService;
     private final SpaceRepository spaceRepository;
+    private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
 
     public UserDto readUser(final Long userId) {
         return UserDto.of(findUser(userId));
@@ -29,9 +38,7 @@ public class UserService {
     public HasReceivedTicketResponseDto readIfUserHasReceivedTicket(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
-        Space space = spaceRepository.findById(spaceId).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
-                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+        Space space = findSpace(spaceId);
         Ticket ticket = ticketService.findTicketWithSpace(space);
 
         if (ticketService.isInvited(user, space)) {
@@ -39,4 +46,26 @@ public class UserService {
         }
         return HasReceivedTicketResponseDto.of(ticket, true);
     }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void receiveTicket(final Long userId, final Long spaceId) {
+
+        User user = findUser(userId);
+        Space space = findSpace(spaceId);
+
+        if (ticketService.isInvited(user, space)) {
+            throw new ConflictException(Error.ALREADY_INVITED_EXCEPTION,
+                    Error.ALREADY_INVITED_EXCEPTION.getMessage());
+        }
+
+        // 티켓 수령하기
+        inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
+    }
+
+    private Space findSpace(Long spaceId) {
+        return spaceRepository.findById(spaceId).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+    }
+
 }

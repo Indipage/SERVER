@@ -7,4 +7,6 @@ import org.springframework.data.repository.Repository;
 
 public interface InviteSpaceRelationRepository extends Repository<InviteSpaceRelation, InviteSpaceRelationId> {
     Optional<InviteSpaceRelation> findByInviteSpaceRelationId(InviteSpaceRelationId id);
+
+    void save(InviteSpaceRelation relation);
 }
