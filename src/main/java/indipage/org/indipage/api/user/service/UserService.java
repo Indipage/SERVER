@@ -63,22 +63,6 @@ public class UserService {
         inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
     }
 
-    @Transactional(rollbackOn = Exception.class)
-    public void visit(final Long userId, final Long spaceId) {
-
-        User user = findUser(userId);
-        Space space = findSpace(spaceId);
-
-        InviteSpaceRelation relation = inviteSpaceRelationRepository.findByInviteSpaceRelationId(
-                InviteSpaceRelationId.newInstance(user, space)).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION,
-                        Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION.getMessage()));
-
-        // 방문하기
-        relation.visit();
-        inviteSpaceRelationRepository.save(relation);
-    }
-
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,

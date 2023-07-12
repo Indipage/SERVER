@@ -41,10 +41,4 @@ public class UserController {
         return ApiResponse.success(Success.CREATE_RECEIVE_TICKET_SUCCESS);
     }
 
-    @PutMapping("/space/{spaceId}/visit")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse updateVisit(@PathVariable final Long spaceId) {
-        userService.visit(1L, spaceId);
-        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
-    }
 }
