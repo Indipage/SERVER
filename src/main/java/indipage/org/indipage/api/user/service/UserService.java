@@ -12,7 +12,10 @@ import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelationId;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
+import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
+import indipage.org.indipage.domain.Relation.SpaceBookmarkRelationId;
 import indipage.org.indipage.domain.Space;
+import indipage.org.indipage.domain.SpaceBookmarkRelationRepository;
 import indipage.org.indipage.domain.SpaceRepository;
 import indipage.org.indipage.domain.Ticket;
 import indipage.org.indipage.domain.User;
@@ -34,6 +37,8 @@ public class UserService {
     private final SpaceRepository spaceRepository;
     private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
     private final ArticleBookmarkRelationRepository articleBookmarkRelationRepository;
+    private final SpaceBookmarkRelationRepository spaceBookmarkRelationRepository;
+
 
     public UserDto readUser(final Long userId) {
         return UserDto.of(findUser(userId));
@@ -118,6 +123,17 @@ public class UserService {
         articleBookmarkRelationRepository.save(relation);
     }
 
+    public IsBookmarkedResponseDto readIsSpaceBookmarked(final Long userId, final Long spaceId) {
+
+        User user = findUser(userId);
+        Space space = findSpace(spaceId);
+
+        if (!isBookMarked(user, space)) {
+            return IsBookmarkedResponseDto.of(false);
+        }
+        return IsBookmarkedResponseDto.of(true);
+    }
+
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
@@ -133,6 +149,17 @@ public class UserService {
     private boolean isBookMarked(User user, Article article) {
         Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
                 ArticleBookmarkRelationId.newInstance(article, user));
+
+        if (relation.isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isBookMarked(User user, Space space) {
+        Optional<SpaceBookmarkRelation> relation = spaceBookmarkRelationRepository.findSpaceBookmarkRelationBySpaceBookmarkRelationId(
+                SpaceBookmarkRelationId.newInstance(user, space));
 
         if (relation.isEmpty()) {
             return false;

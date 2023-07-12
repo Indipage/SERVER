@@ -62,4 +62,11 @@ public class UserController {
         userService.createArticleBookmark(1L, articleId);
         return ApiResponse.success(Success.CREATE_ARTICLE_BOOKMARK_SUCCESS);
     }
+
+    @GetMapping("/bookmark/space/{spaceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<IsBookmarkedResponseDto> readIsSpaceBookmarked(@PathVariable Long spaceId) {
+        return ApiResponse.success(Success.READ_IS_SPACE_BOOKMARKED_SUCCESS,
+                userService.readIsSpaceBookmarked(1L, spaceId));
+    }
 }
