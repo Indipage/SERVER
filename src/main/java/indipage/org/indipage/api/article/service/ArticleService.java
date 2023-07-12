@@ -42,7 +42,7 @@ public class ArticleService {
 
         for (Article article : articles) {
             Space space = article.getSpace();
-            boolean isInvited = ticketService.isInvited(userId, space.getId());
+            boolean isInvited = ticketService.isInvited(user, space);
             result.add(ArticleSummaryResponseDto.of(space, article, isInvited));
         }
 

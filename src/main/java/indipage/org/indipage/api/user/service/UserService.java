@@ -34,7 +34,7 @@ public class UserService {
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
         Ticket ticket = ticketService.findTicketWithSpace(space);
 
-        if (ticketService.isInvited(userId, spaceId)) {
+        if (ticketService.isInvited(user, space)) {
             return HasReceivedTicketResponseDto.of(ticket, false);
         }
         return HasReceivedTicketResponseDto.of(ticket, true);
