@@ -37,4 +37,15 @@ public class InviteSpaceRelation extends ModifiedCreatedTimeBaseEntity {
     @Column(nullable = false)
     @ColumnDefault("false")
     private boolean hasVisited;
+
+    private InviteSpaceRelation(InviteSpaceRelationId inviteSpaceRelationId, User user, Space space) {
+        this.inviteSpaceRelationId = inviteSpaceRelationId;
+        this.user = user;
+        this.space = space;
+    }
+
+    public static InviteSpaceRelation newInstance(User user, Space space) {
+        return new InviteSpaceRelation(InviteSpaceRelationId.newInstance(user, space), user, space);
+    }
+
 }

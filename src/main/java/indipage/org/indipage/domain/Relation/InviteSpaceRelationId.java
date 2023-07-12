@@ -1,5 +1,7 @@
 package indipage.org.indipage.domain.Relation;
 
+import indipage.org.indipage.domain.Space;
+import indipage.org.indipage.domain.User;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -18,4 +20,8 @@ public class InviteSpaceRelationId implements Serializable {
 
     @Column(name = "space_id", nullable = false)
     private Long spaceId;
+
+    public static InviteSpaceRelationId newInstance(User user, Space space) {
+        return new InviteSpaceRelationId(user.getId(), space.getId());
+    }
 }
