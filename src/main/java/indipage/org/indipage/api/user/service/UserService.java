@@ -37,7 +37,7 @@ public class UserService {
 
     public HasReceivedTicketResponseDto readIfUserHasReceivedTicket(final Long userId, final Long spaceId) {
         // 유저 validate
-        userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_USER_EXCEPTION,
                         Error.NOT_FOUND_USER_EXCEPTION.getMessage()));
 
@@ -54,7 +54,7 @@ public class UserService {
 
         // 유저의 티켓 수령 여부 조회
         Optional<InviteSpaceRelation> relation = inviteSpaceRelationRepository.findByInviteSpaceRelationId(
-                new InviteSpaceRelationId(userId, spaceId));
+                InviteSpaceRelationId.newInstance(user, space));
 
         if (relation.isEmpty()) {
             return HasReceivedTicketResponseDto.of(ticket, false);
