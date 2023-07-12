@@ -30,6 +30,7 @@ public enum Error {
      * 409 CONFLICT
      */
     ALREADY_INVITED_EXCEPTION(HttpStatus.CONFLICT, "이미 티켓을 수령한 상태입니다."),
+    ALREADY_BOOKMARKED_ARTICLE_EXCEPTION(HttpStatus.CONFLICT, "이미 북마크한 아티클입니다."),
 
     /**
      * 413 PAYLOAD_TOO_LARGE
