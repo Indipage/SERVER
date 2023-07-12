@@ -31,8 +31,7 @@
 | CI/CD 환경 구축                          | 진승희  |
 | API 개발                         | 정준서, 진승희  |
 
+<br>
+
 ## 🛠️ 아키텍처 구조 및 사용 스택
 <img width="630" alt="스크린샷 2023-07-12 오후 9 46 27" src="https://github.com/Indipage/SERVER/assets/77621712/2fa00e1b-83b4-4699-adc3-b6d2ed01eb1c">
-
-
----
