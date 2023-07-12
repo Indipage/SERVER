@@ -1,18 +1,10 @@
 package indipage.org.indipage.domain;
 
-import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -29,8 +21,10 @@ public class Article extends CreatedTimeBaseEntity {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private String thumbnailUrl;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "space_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private Space space;
-
 }

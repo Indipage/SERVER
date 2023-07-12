@@ -61,7 +61,7 @@ public class SpaceService {
         followSpaceRelationRepository.save(FollowSpaceRelation.create(user, space));
     }
 
-    private Space findSpace(final Long spaceId) {
+    public Space findSpace(final Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
