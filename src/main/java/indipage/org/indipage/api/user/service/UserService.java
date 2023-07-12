@@ -11,6 +11,7 @@ import indipage.org.indipage.domain.Ticket;
 import indipage.org.indipage.domain.User;
 import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
+import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +38,7 @@ public class UserService {
     public HasReceivedTicketResponseDto readIfUserHasReceivedTicket(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
-        Space space = spaceRepository.findById(spaceId).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
-                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+        Space space = findSpace(spaceId);
         Ticket ticket = ticketService.findTicketWithSpace(space);
 
         if (ticketService.isInvited(user, space)) {
@@ -50,17 +49,23 @@ public class UserService {
 
     @Transactional(rollbackOn = Exception.class)
     public void receiveTicket(final Long userId, final Long spaceId) {
-        // TODO: 티켓 수령 여부 조회 (함수 호출) -> 이미 있으면 에러 처리
 
         User user = findUser(userId);
+        Space space = findSpace(spaceId);
 
-        // TODO: spaceService로 뺀 findSpace 함수 호출
-        Space space = spaceRepository.findById(spaceId).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
-                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+        if (ticketService.isInvited(user, space)) {
+            throw new ConflictException(Error.ALREADY_INVITED_EXCEPTION,
+                    Error.ALREADY_INVITED_EXCEPTION.getMessage());
+        }
 
         // 티켓 수령하기
         inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
+    }
+
+    private Space findSpace(Long spaceId) {
+        return spaceRepository.findById(spaceId).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
     }
 
 }
