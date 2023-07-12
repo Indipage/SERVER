@@ -14,6 +14,7 @@ import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.NotFoundException;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +65,7 @@ public class UserService {
 
     }
 
+    @Transactional(rollbackOn = Exception.class)
     public void receiveTicket(final Long userId, final Long spaceId) {
         // TODO: 티켓 수령 여부 조회 (함수 호출) -> 이미 있으면 에러 처리
 
