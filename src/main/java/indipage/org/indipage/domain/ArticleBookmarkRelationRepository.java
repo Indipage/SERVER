@@ -11,4 +11,6 @@ public interface ArticleBookmarkRelationRepository extends
     Optional<ArticleBookmarkRelation> findArticleBookmarkRelationByArticleBookmarkRelationId(
             ArticleBookmarkRelationId articleBookmarkRelationId);
 
+    void save(ArticleBookmarkRelation relation);
+
 }
