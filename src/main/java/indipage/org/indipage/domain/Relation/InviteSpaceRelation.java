@@ -48,4 +48,8 @@ public class InviteSpaceRelation extends ModifiedCreatedTimeBaseEntity {
         return new InviteSpaceRelation(InviteSpaceRelationId.newInstance(user, space), user, space);
     }
 
+    public void visit() {
+        this.hasVisited = true;
+    }
+
 }
