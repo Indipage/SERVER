@@ -1,6 +1,7 @@
 package indipage.org.indipage.api.user.controller;
 
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
+import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.common.dto.ApiResponse;
@@ -46,5 +47,12 @@ public class UserController {
     public ApiResponse updateVisit(@PathVariable final Long spaceId) {
         userService.visit(1L, spaceId);
         return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
+    }
+
+    @GetMapping("/bookmark/article/{articleId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<IsBookmarkedResponseDto> readIsArticleBookMarked(@PathVariable Long articleId) {
+        return ApiResponse.success(Success.READ_IS_ARTICLE_BOOKMARKED_SUCCESS,
+                userService.readIsArticleBookMarked(1L, articleId));
     }
 }
