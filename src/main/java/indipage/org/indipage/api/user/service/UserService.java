@@ -63,4 +63,19 @@ public class UserService {
         return HasReceivedTicketResponseDto.of(ticket, true);
 
     }
+
+    public void receiveTicket(final Long userId, final Long spaceId) {
+        // TODO: 티켓 수령 여부 조회 (함수 호출) -> 이미 있으면 에러 처리
+
+        User user = findUser(userId);
+
+        // TODO: spaceService로 뺀 findSpace 함수 호출
+        Space space = spaceRepository.findById(spaceId).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+
+        // 티켓 수령하기
+        inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
+    }
+
 }

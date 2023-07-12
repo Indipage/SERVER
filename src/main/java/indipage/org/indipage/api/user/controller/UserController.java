@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,12 @@ public class UserController {
     public ApiResponse<HasReceivedTicketResponseDto> readIfUserHasReceivedTicket(@PathVariable final Long spaceId) {
         return ApiResponse.success(Success.READ_IF_USER_HAS_RECEIVED_TICKET_SUCCESS,
                 userService.readIfUserHasReceivedTicket(1L, spaceId));
+    }
+
+    @PostMapping("/ticket/{spaceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<HasReceivedTicketResponseDto> receiveTicket(@PathVariable final Long spaceId) {
+        userService.receiveTicket(1L, spaceId);
+        return ApiResponse.success(Success.CREATE_RECEIVE_TICKET_SUCCESS);
     }
 }
