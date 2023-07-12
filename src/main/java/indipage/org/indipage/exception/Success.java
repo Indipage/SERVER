@@ -18,14 +18,18 @@ public enum Success {
     READ_ARTICLE_SUCCESS(HttpStatus.OK, "아티클 상세정보 조회를 성공했습니다."),
     READ_USER_SUCCESS(HttpStatus.OK, "사용자 상세정보 조회를 성공했습니다."),
     READ_FOLLOW_SPACE_SUCCESS(HttpStatus.OK, "조르기 여부 조회를 성공했습니다."),
+    UPDATE_VISIT_SUCCESS(HttpStatus.OK, "공간 방문에 성공했습니다."),
     READ_IF_USER_HAS_RECEIVED_TICKET_SUCCESS(HttpStatus.OK, "티켓 수령 여부 조회를 성공했습니다."),
     READ_ARTICLE_SUMMARY_LIST_SUCCESS(HttpStatus.OK, "아티클 전체 목록 조회에 성공했습니다."),
     /**
      * 201 CREATED
      */
     USER_CREATE_SUCCESS(HttpStatus.CREATED, "회원가입이 완료됐습니다."),
+
     CREATE_IMAGE_SUCCESS(HttpStatus.CREATED, "이미지 업로드를 완료했습니다."),
+
     CREATE_FOLLOW_SPACE_SUCCESS(HttpStatus.CREATED, "조르기 등록에 성공했습니다."),
+
     CREATE_RECEIVE_TICKET_SUCCESS(HttpStatus.CREATED, "티켓 수령에 성공했습니다.")
     ;
 
