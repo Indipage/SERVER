@@ -9,4 +9,6 @@ public interface ArticleRepository extends Repository<Article, Long> {
     Optional<Article> findById(Long id);
 
     List<Article> findAll();
+
+    Optional<Article> findArticleBySpace(Space space);
 }
