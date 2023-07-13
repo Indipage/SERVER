@@ -55,4 +55,11 @@ public class UserController {
         return ApiResponse.success(Success.READ_IS_ARTICLE_BOOKMARKED_SUCCESS,
                 userService.readIsArticleBookMarked(1L, articleId));
     }
+
+    @PostMapping("/bookmark/article/{articleId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse createArticleBookmark(@PathVariable Long articleId) {
+        userService.createArticleBookmark(1L, articleId);
+        return ApiResponse.success(Success.CREATE_ARTICLE_BOOKMARK_SUCCESS);
+    }
 }

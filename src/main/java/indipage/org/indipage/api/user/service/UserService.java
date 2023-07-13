@@ -102,6 +102,22 @@ public class UserService {
         return IsBookmarkedResponseDto.of(true);
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public void createArticleBookmark(final Long userId, final Long articleId) {
+        User user = findUser(userId);
+        Article article = findArticle(articleId);
+
+        // 북마크 검사
+        if (isBookMarked(user, article)) {
+            throw new ConflictException(Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION,
+                    Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION.getMessage());
+        }
+        ;
+
+        ArticleBookmarkRelation relation = ArticleBookmarkRelation.newInstance(article, user);
+        articleBookmarkRelationRepository.save(relation);
+    }
+
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
@@ -112,5 +128,16 @@ public class UserService {
         return articleRepository.findById(articleId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_ARTICLE_EXCEPTION.getMessage()));
+    }
+
+    private boolean isBookMarked(User user, Article article) {
+        Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
+                ArticleBookmarkRelationId.newInstance(article, user));
+
+        if (relation.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 }
