@@ -85,4 +85,11 @@ public class UserController {
         userService.createSpaceBookmark(1L, spaceId);
         return ApiResponse.success(Success.CREATE_SPACE_BOOKMARK_SUCCESS);
     }
+
+    @DeleteMapping("/bookmark/space/{spaceId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse deleteSpaceBookmark(@PathVariable Long spaceId) {
+        userService.deleteSpaceBookmark(1L, spaceId);
+        return ApiResponse.success(Success.DELETE_SPACE_BOOKMARK_SUCCESS);
+    }
 }

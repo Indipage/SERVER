@@ -11,4 +11,6 @@ public interface SpaceBookmarkRelationRepository extends
             SpaceBookmarkRelationId spaceBookmarkRelationId);
 
     void save(SpaceBookmarkRelation relation);
+
+    void delete(SpaceBookmarkRelation relation);
 }
