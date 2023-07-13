@@ -16,7 +16,7 @@ public class SpaceOfArticleResponseDto {
     private String title;
     private String spaceType;
     private Long id;
-    private boolean isIssued;
+    private Boolean isIssued;
 
     private static boolean getIsIssued(Article article) {
         return article.getIssueDate().isBefore(LocalDateTime.now());
