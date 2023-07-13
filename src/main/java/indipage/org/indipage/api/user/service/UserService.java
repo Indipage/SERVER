@@ -159,6 +159,16 @@ public class UserService {
         spaceBookmarkRelationRepository.save(relation);
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public void deleteSpaceBookmark(final Long userId, final Long spaceId) {
+        User user = findUser(userId);
+        Space space = findSpace(spaceId);
+
+        SpaceBookmarkRelation relation = findSpaceBookmark(user, space);
+
+        spaceBookmarkRelationRepository.delete(relation);
+    }
+
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
@@ -176,6 +186,13 @@ public class UserService {
                         ArticleBookmarkRelationId.newInstance(article, user))
                 .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION,
                         Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION.getMessage()));
+    }
+
+    private SpaceBookmarkRelation findSpaceBookmark(User user, Space space) {
+        return spaceBookmarkRelationRepository.findSpaceBookmarkRelationBySpaceBookmarkRelationId(
+                        SpaceBookmarkRelationId.newInstance(user, space))
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
     private boolean isBookMarked(User user, Article article) {
