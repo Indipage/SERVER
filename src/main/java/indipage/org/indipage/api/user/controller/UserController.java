@@ -9,6 +9,7 @@ import indipage.org.indipage.exception.Success;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,13 @@ public class UserController {
     public ApiResponse createArticleBookmark(@PathVariable Long articleId) {
         userService.createArticleBookmark(1L, articleId);
         return ApiResponse.success(Success.CREATE_ARTICLE_BOOKMARK_SUCCESS);
+    }
+
+    @DeleteMapping("/bookmark/article/{articleId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse deleteArticleBookmark(@PathVariable Long articleId) {
+        userService.deleteArticleBookmark(1L, articleId);
+        return ApiResponse.success(Success.DELETE_ARTICLE_BOOKMARK_SUCCESS);
     }
 
     @GetMapping("/bookmark/space/{spaceId}")

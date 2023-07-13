@@ -123,6 +123,16 @@ public class UserService {
         articleBookmarkRelationRepository.save(relation);
     }
 
+    @Transactional(rollbackOn = Exception.class)
+    public void deleteArticleBookmark(final Long userId, final Long articleId) {
+        User user = findUser(userId);
+        Article article = findArticle(articleId);
+
+        ArticleBookmarkRelation relation = findArticleBookmark(user, article);
+
+        articleBookmarkRelationRepository.delete(relation);
+    }
+
     public IsBookmarkedResponseDto readIsSpaceBookmarked(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
@@ -159,6 +169,13 @@ public class UserService {
         return articleRepository.findById(articleId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_ARTICLE_EXCEPTION.getMessage()));
+    }
+
+    private ArticleBookmarkRelation findArticleBookmark(User user, Article article) {
+        return articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
+                        ArticleBookmarkRelationId.newInstance(article, user))
+                .orElseThrow(() -> new ConflictException(Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
     private boolean isBookMarked(User user, Article article) {

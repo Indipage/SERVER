@@ -13,4 +13,5 @@ public interface ArticleBookmarkRelationRepository extends
 
     void save(ArticleBookmarkRelation relation);
 
+    void delete(ArticleBookmarkRelation relation);
 }
