@@ -26,6 +26,7 @@ public enum Success {
     DELETE_ARTICLE_BOOKMARK_SUCCESS(HttpStatus.OK, "아티클 북마크 삭제 성공"),
     DELETE_SPACE_BOOKMARK_SUCCESS(HttpStatus.OK, "공간 북마크 삭제 성공"),
     READ_ARTICLE_OF_SPACE_SUCCESS(HttpStatus.OK, "공간에 대한 아티클 조회 성공"),
+    READ_ARTICLE_BOOKMARK_LIST_SUCCESS(HttpStatus.OK, "북마크한 아티클 목록 조회 성공"),
     /**
      * 201 CREATED
      */
