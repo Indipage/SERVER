@@ -2,9 +2,10 @@ package indipage.org.indipage.domain;
 
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelationId;
-import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
-import java.util.Optional;
 import org.springframework.data.repository.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ArticleBookmarkRelationRepository extends
         Repository<ArticleBookmarkRelation, ArticleBookmarkRelationId> {
@@ -14,4 +15,6 @@ public interface ArticleBookmarkRelationRepository extends
     void save(ArticleBookmarkRelation relation);
 
     void delete(ArticleBookmarkRelation relation);
+
+    List<ArticleBookmarkRelation> findAllByUser(User user);
 }

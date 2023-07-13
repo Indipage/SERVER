@@ -1,32 +1,22 @@
 package indipage.org.indipage.api.user.service;
 
+import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
-import indipage.org.indipage.domain.Article;
-import indipage.org.indipage.domain.ArticleBookmarkRelationRepository;
-import indipage.org.indipage.domain.ArticleRepository;
-import indipage.org.indipage.domain.InviteSpaceRelationRepository;
-import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
-import indipage.org.indipage.domain.Relation.ArticleBookmarkRelationId;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
-import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
-import indipage.org.indipage.domain.Relation.SpaceBookmarkRelationId;
-import indipage.org.indipage.domain.Space;
-import indipage.org.indipage.domain.SpaceBookmarkRelationRepository;
-import indipage.org.indipage.domain.SpaceRepository;
-import indipage.org.indipage.domain.Ticket;
-import indipage.org.indipage.domain.User;
-import indipage.org.indipage.domain.UserRepository;
+import indipage.org.indipage.domain.*;
+import indipage.org.indipage.domain.Relation.*;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
-import java.util.Optional;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -215,5 +205,20 @@ public class UserService {
         }
 
         return true;
+    }
+
+    public List<ArticleSummaryResponseDto> readArticleBookmarkList(final long userId) {
+        User user = findUser(userId);
+        List<ArticleSummaryResponseDto> result = new ArrayList<>();
+        List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUser(user);
+
+        for (ArticleBookmarkRelation relation : bookmarkRelations) {
+            Article article = relation.getArticle();
+            Space space = article.getSpace();
+
+            boolean isInvited = ticketService.isInvited(user, space);
+            result.add(ArticleSummaryResponseDto.of(article.getSpace(), article, isInvited));
+        }
+        return result;
     }
 }
