@@ -9,11 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArticleBookmarkRelation extends CreatedTimeBaseEntity {
 
@@ -29,4 +31,9 @@ public class ArticleBookmarkRelation extends CreatedTimeBaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public static ArticleBookmarkRelation newInstance(Article article, User user) {
+        return new ArticleBookmarkRelation(
+                ArticleBookmarkRelationId.newInstance(article, user), article, user);
+    }
 }
