@@ -46,4 +46,11 @@ public class SpaceController {
         spaceService.createFollowSpace(1L, spaceId);
         return ApiResponse.success(Success.CREATE_FOLLOW_SPACE_SUCCESS);
     }
+
+    @PutMapping("/{spaceId}/visit")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse updateVisit(@PathVariable final Long spaceId) {
+        spaceService.visit(1L, spaceId);
+        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
+    }
 }

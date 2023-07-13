@@ -126,7 +126,10 @@ public class UserService {
     public IsBookmarkedResponseDto readIsSpaceBookmarked(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
-        Space space = findSpace(spaceId);
+        Space space = 
+          
+          
+          (spaceId);
 
         if (!isBookMarked(user, space)) {
             return IsBookmarkedResponseDto.of(false);
