@@ -32,7 +32,9 @@ public enum Success {
 
     CREATE_FOLLOW_SPACE_SUCCESS(HttpStatus.CREATED, "조르기 등록에 성공했습니다."),
     CREATE_RECEIVE_TICKET_SUCCESS(HttpStatus.CREATED, "티켓 수령에 성공했습니다."),
-    CREATE_ARTICLE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "아티클 북마크 등록에 성공했습니다.");
+    CREATE_ARTICLE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "아티클 북마크 등록에 성공했습니다."),
+    CREATE_SPACE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "공간 북마크 등록에 성공했습니다.")
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;

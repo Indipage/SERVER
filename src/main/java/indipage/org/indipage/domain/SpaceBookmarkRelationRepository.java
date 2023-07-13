@@ -10,4 +10,5 @@ public interface SpaceBookmarkRelationRepository extends
     Optional<SpaceBookmarkRelation> findSpaceBookmarkRelationBySpaceBookmarkRelationId(
             SpaceBookmarkRelationId spaceBookmarkRelationId);
 
+    void save(SpaceBookmarkRelation relation);
 }
