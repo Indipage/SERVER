@@ -174,7 +174,7 @@ public class UserService {
     private ArticleBookmarkRelation findArticleBookmark(User user, Article article) {
         return articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
                         ArticleBookmarkRelationId.newInstance(article, user))
-                .orElseThrow(() -> new ConflictException(Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION,
+                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION,
                         Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
