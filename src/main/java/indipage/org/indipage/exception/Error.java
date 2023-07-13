@@ -26,6 +26,7 @@ public enum Error {
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다."),
     NOT_FOUND_TICKET_RECEIVE_EXCEPTION(HttpStatus.NOT_FOUND, "해당 공간의 초대장을 수령하지 않았습니다."),
     NOT_FOUND_TICKET_EXCEPTION(HttpStatus.NOT_FOUND, "해당 공간에 티켓이 존재하지 않습니다."),
+    NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION(HttpStatus.NOT_FOUND, "해당 아티클에 대한 북마크가 존재하지 않습니다."),
     /**
      * 409 CONFLICT
      */
