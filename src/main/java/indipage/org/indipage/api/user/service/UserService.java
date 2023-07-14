@@ -80,7 +80,7 @@ public class UserService {
         inviteSpaceRelationRepository.save(relation);
     }
 
-    public IsBookmarkedResponseDto readIsArticleBookMarked(final Long userId, final Long articleId) {
+    public IsBookmarkedResponseDto readArticleBookmark(final Long userId, final Long articleId) {
 
         User user = findUser(userId);
         Article article = findArticle(articleId);
@@ -120,7 +120,7 @@ public class UserService {
         articleBookmarkRelationRepository.delete(relation);
     }
 
-    public IsBookmarkedResponseDto readIsSpaceBookmarked(final Long userId, final Long spaceId) {
+    public IsBookmarkedResponseDto readSpaceBookmark(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
         Space space = findSpace(spaceId);
