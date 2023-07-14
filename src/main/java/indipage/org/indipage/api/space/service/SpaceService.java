@@ -4,7 +4,7 @@ import indipage.org.indipage.api.article.service.ArticleService;
 import indipage.org.indipage.api.space.controller.dto.response.BookRecommendationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceOfArticleResponseDto;
+import indipage.org.indipage.api.space.controller.dto.response.ArticleOfSpaceResponseDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.FollowSpaceRelationRepository;
@@ -89,10 +89,10 @@ public class SpaceService {
         followSpaceRelationRepository.save(FollowSpaceRelation.create(user, space));
     }
 
-    public SpaceOfArticleResponseDto readArticleOfSpace(final Long spaceId) {
+    public ArticleOfSpaceResponseDto readArticleOfSpace(final Long spaceId) {
         Space space = findSpace(spaceId);
         Article article = articleService.findArticleBySpace(space);
-        return SpaceOfArticleResponseDto.of(space, article);
+        return ArticleOfSpaceResponseDto.of(space, article);
     }
 
     public Space findSpace(final Long spaceId) {
