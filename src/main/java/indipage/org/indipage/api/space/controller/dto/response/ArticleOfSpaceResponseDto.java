@@ -10,26 +10,28 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class SpaceOfArticleResponseDto {
+public class ArticleOfSpaceResponseDto {
 
     private String spaceName;
     private String title;
     private String spaceType;
     private Long id;
     private Boolean isIssued;
+    private String imageUrl;
 
     private static boolean getIsIssued(Article article) {
         return article.getIssueDate().isBefore(LocalDateTime.now());
     }
 
-    public static SpaceOfArticleResponseDto of(Space space, Article article) {
-        return SpaceOfArticleResponseDto
+    public static ArticleOfSpaceResponseDto of(Space space, Article article) {
+        return ArticleOfSpaceResponseDto
                 .builder()
                 .spaceName(space.getName())
                 .title(article.getTitle())
                 .spaceType(space.getType().getTypeName())
                 .id(article.getId())
                 .isIssued(getIsIssued(article))
+                .imageUrl(article.getThumbnailUrl())
                 .build();
     }
 }

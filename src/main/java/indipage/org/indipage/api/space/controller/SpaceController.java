@@ -3,7 +3,7 @@ package indipage.org.indipage.api.space.controller;
 import indipage.org.indipage.api.space.controller.dto.response.BookRecommendationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceOfArticleResponseDto;
+import indipage.org.indipage.api.space.controller.dto.response.ArticleOfSpaceResponseDto;
 import indipage.org.indipage.api.space.service.SpaceService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
@@ -50,7 +50,7 @@ public class SpaceController {
 
     @GetMapping("/{spaceId}/article")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<SpaceOfArticleResponseDto> readArticleOfSpace(@PathVariable final Long spaceId) {
+    public ApiResponse<ArticleOfSpaceResponseDto> readArticleOfSpace(@PathVariable final Long spaceId) {
         return ApiResponse.success(Success.READ_ARTICLE_OF_SPACE_SUCCESS, spaceService.readArticleOfSpace(spaceId));
     }
   

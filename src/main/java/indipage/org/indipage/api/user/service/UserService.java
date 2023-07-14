@@ -1,6 +1,7 @@
 package indipage.org.indipage.api.user.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -214,6 +215,20 @@ public class UserService {
 
             boolean isInvited = ticketService.isInvited(user, space);
             result.add(ArticleSummaryResponseDto.of(article.getSpace(), article, isInvited));
+        }
+        return result;
+    }
+
+    public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
+        User user = findUser(userId);
+        List<ReceivedTicketResponseDto> result = new ArrayList<>();
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(user);
+
+        for (InviteSpaceRelation relation : inviteRelations) {
+            Space spaceOfTicket = relation.getSpace();
+            Ticket ticket = ticketService.findTicketWithSpace(spaceOfTicket);
+
+            result.add(ReceivedTicketResponseDto.of(ticket, spaceOfTicket));
         }
         return result;
     }
