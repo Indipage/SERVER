@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -23,6 +24,9 @@ public class Article extends CreatedTimeBaseEntity {
 
     @Column(nullable = false)
     private String thumbnailUrl;
+
+    @Column
+    private LocalDateTime issueDate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "space_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
