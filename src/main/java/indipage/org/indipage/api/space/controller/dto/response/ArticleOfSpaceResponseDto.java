@@ -16,7 +16,6 @@ public class ArticleOfSpaceResponseDto {
     private String title;
     private String spaceType;
     private Long id;
-    private Boolean isIssued;
     private String imageUrl;
 
     private static boolean getIsIssued(Article article) {
@@ -30,7 +29,6 @@ public class ArticleOfSpaceResponseDto {
                 .title(article.getTitle())
                 .spaceType(space.getType().getTypeName())
                 .id(article.getId())
-                .isIssued(getIsIssued(article))
                 .imageUrl(article.getThumbnailUrl())
                 .build();
     }
