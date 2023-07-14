@@ -25,6 +25,8 @@ public enum Success {
     READ_IS_SPACE_BOOKMARKED_SUCCESS(HttpStatus.OK, "공간 북마크 여부 조회 성공"),
     DELETE_ARTICLE_BOOKMARK_SUCCESS(HttpStatus.OK, "아티클 북마크 삭제 성공"),
     DELETE_SPACE_BOOKMARK_SUCCESS(HttpStatus.OK, "공간 북마크 삭제 성공"),
+    READ_ARTICLE_OF_SPACE_SUCCESS(HttpStatus.OK, "공간에 대한 아티클 조회 성공"),
+    READ_ARTICLE_BOOKMARK_LIST_SUCCESS(HttpStatus.OK, "북마크한 아티클 목록 조회 성공"),
     /**
      * 201 CREATED
      */
@@ -35,7 +37,8 @@ public enum Success {
     CREATE_FOLLOW_SPACE_SUCCESS(HttpStatus.CREATED, "조르기 등록에 성공했습니다."),
     CREATE_RECEIVE_TICKET_SUCCESS(HttpStatus.CREATED, "티켓 수령에 성공했습니다."),
     CREATE_ARTICLE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "아티클 북마크 등록에 성공했습니다."),
-    CREATE_SPACE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "공간 북마크 등록에 성공했습니다.")
+    CREATE_SPACE_BOOKMARK_SUCCESS(HttpStatus.CREATED, "공간 북마크 등록에 성공했습니다."),
+
     ;
 
     private final HttpStatus httpStatus;

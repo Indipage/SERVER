@@ -1,5 +1,6 @@
 package indipage.org.indipage.api.user.service;
 
+import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -198,5 +201,20 @@ public class UserService {
         }
 
         return true;
+    }
+
+    public List<ArticleSummaryResponseDto> readArticleBookmarkList(final long userId) {
+        User user = findUser(userId);
+        List<ArticleSummaryResponseDto> result = new ArrayList<>();
+        List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUser(user);
+
+        for (ArticleBookmarkRelation relation : bookmarkRelations) {
+            Article article = relation.getArticle();
+            Space space = article.getSpace();
+
+            boolean isInvited = ticketService.isInvited(user, space);
+            result.add(ArticleSummaryResponseDto.of(article.getSpace(), article, isInvited));
+        }
+        return result;
     }
 }

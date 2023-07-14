@@ -1,22 +1,18 @@
 package indipage.org.indipage.api.user.controller;
 
+import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -91,5 +87,11 @@ public class UserController {
     public ApiResponse deleteSpaceBookmark(@PathVariable Long spaceId) {
         userService.deleteSpaceBookmark(1L, spaceId);
         return ApiResponse.success(Success.DELETE_SPACE_BOOKMARK_SUCCESS);
+    }
+
+    @GetMapping("/bookmark/article")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<List<ArticleSummaryResponseDto>> readArticleBookmarkList() {
+        return ApiResponse.success(Success.READ_ARTICLE_BOOKMARK_LIST_SUCCESS, userService.readArticleBookmarkList(1L));
     }
 }

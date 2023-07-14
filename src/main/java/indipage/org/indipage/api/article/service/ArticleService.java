@@ -48,4 +48,10 @@ public class ArticleService {
 
         return result;
     }
+
+    public Article findArticleBySpace(final Space space) {
+        return articleRepository.findArticleBySpace(space).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION,
+                        Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
+    }
 }
