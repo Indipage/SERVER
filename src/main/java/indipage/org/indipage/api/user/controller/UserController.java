@@ -55,7 +55,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<IsBookmarkedResponseDto> readIsArticleBookMarked(@PathVariable Long articleId) {
         return ApiResponse.success(Success.READ_IS_ARTICLE_BOOKMARKED_SUCCESS,
-                userService.readIsArticleBookMarked(1L, articleId));
+                userService.readArticleBookmark(1L, articleId));
     }
 
     @PostMapping("/bookmark/article/{articleId}")
@@ -76,7 +76,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<IsBookmarkedResponseDto> readIsSpaceBookmarked(@PathVariable Long spaceId) {
         return ApiResponse.success(Success.READ_IS_SPACE_BOOKMARKED_SUCCESS,
-                userService.readIsSpaceBookmarked(1L, spaceId));
+                userService.readSpaceBookmark(1L, spaceId));
     }
 
     @PostMapping("/bookmark/space/{spaceId}")
