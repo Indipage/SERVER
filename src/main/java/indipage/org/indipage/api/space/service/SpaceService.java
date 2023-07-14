@@ -5,8 +5,8 @@ import indipage.org.indipage.api.space.controller.dto.response.BookRecommendatio
 import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceOfArticleResponseDto;
-import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.service.UserService;
+import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.FollowSpaceRelationRepository;
 import indipage.org.indipage.domain.InviteSpaceRelationRepository;
 import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
@@ -37,7 +37,6 @@ public class SpaceService {
     private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
     private final UserService userService;
     private final ArticleService articleService;
-    private final TicketService ticketService;
 
     public SpaceDto readSpace(final Long spaceId) {
         Space space = findSpace(spaceId);
