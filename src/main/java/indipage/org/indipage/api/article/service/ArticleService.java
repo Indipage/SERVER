@@ -13,6 +13,7 @@ import indipage.org.indipage.exception.model.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class ArticleService {
         User user = userService.findUser(userId);
 
         for (Article article : articles) {
+            if (article.getIssueDate().isAfter(LocalDateTime.now()) || article.getIssueDate().isEqual(LocalDateTime.now())) {
+                continue;
+            }
+
             Space space = article.getSpace();
             boolean isInvited = ticketService.isInvited(user, space);
             result.add(ArticleSummaryResponseDto.of(space, article, isInvited));
@@ -50,8 +55,13 @@ public class ArticleService {
     }
 
     public Article findArticleBySpace(final Space space) {
-        return articleRepository.findArticleBySpace(space).orElseThrow(
+        Article article = articleRepository.findArticleBySpace(space).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
+
+        if (article.getIssueDate().isAfter(LocalDateTime.now()) || article.getIssueDate().isEqual(LocalDateTime.now())) {
+            throw new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION, Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage());
+        }
+        return article;
     }
 }
