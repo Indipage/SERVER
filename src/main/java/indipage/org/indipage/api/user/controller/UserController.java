@@ -95,7 +95,7 @@ public class UserController {
         return ApiResponse.success(Success.READ_ARTICLE_BOOKMARK_LIST_SUCCESS, userService.readArticleBookmarkList(1L));
     }
 
-    @PutMapping("/user/weekly/slide")
+    @PutMapping("/weekly/slide")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse UpdateSlideAt() {
         userService.updateSlideAt(1L);
