@@ -222,6 +222,7 @@ public class UserService {
         return result;
     }
 
+    @Transactional
     public void updateSlideAt(final Long userId) {
         User user = findUser(userId);
         user.updateSlideAt();
