@@ -17,6 +17,7 @@ public class ArticleSummaryResponseDto {
     private Long id;
     private boolean isTicketReceived;
     private LocalDateTime issueDate;
+    private String thumbnailUrl;
 
     public static ArticleSummaryResponseDto of(Space space, Article article, boolean isTicketReceived) {
         return ArticleSummaryResponseDto
@@ -27,6 +28,7 @@ public class ArticleSummaryResponseDto {
                 .id(article.getId())
                 .isTicketReceived(isTicketReceived)
                 .issueDate(article.getIssueDate())
+                .thumbnailUrl(article.getThumbnailUrl())
                 .build();
     }
 }
