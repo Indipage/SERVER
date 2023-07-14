@@ -53,4 +53,11 @@ public class SpaceController {
     public ApiResponse<SpaceOfArticleResponseDto> readArticleOfSpace(@PathVariable final Long spaceId) {
         return ApiResponse.success(Success.READ_ARTICLE_OF_SPACE_SUCCESS, spaceService.readArticleOfSpace(spaceId));
     }
+  
+    @PutMapping("/{spaceId}/visit")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse updateVisit(@PathVariable final Long spaceId) {
+        spaceService.visit(1L, spaceId);
+        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
+    }
 }

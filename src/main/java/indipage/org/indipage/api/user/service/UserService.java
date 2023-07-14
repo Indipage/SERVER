@@ -83,15 +83,12 @@ public class UserService {
         inviteSpaceRelationRepository.save(relation);
     }
 
-    public IsBookmarkedResponseDto readIsArticleBookMarked(final Long userId, final Long articleId) {
+    public IsBookmarkedResponseDto readArticleBookmark(final Long userId, final Long articleId) {
 
         User user = findUser(userId);
         Article article = findArticle(articleId);
 
-        Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
-                ArticleBookmarkRelationId.newInstance(article, user));
-
-        if (relation.isEmpty()) {
+        if (!isArticleBookmarked(user, article)) {
             return IsBookmarkedResponseDto.of(false);
         }
         return IsBookmarkedResponseDto.of(true);
@@ -103,11 +100,10 @@ public class UserService {
         Article article = findArticle(articleId);
 
         // 북마크 검사
-        if (isBookMarked(user, article)) {
+        if (isArticleBookmarked(user, article)) {
             throw new ConflictException(Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION,
                     Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION.getMessage());
         }
-        ;
 
         ArticleBookmarkRelation relation = ArticleBookmarkRelation.newInstance(article, user);
         articleBookmarkRelationRepository.save(relation);
@@ -123,12 +119,12 @@ public class UserService {
         articleBookmarkRelationRepository.delete(relation);
     }
 
-    public IsBookmarkedResponseDto readIsSpaceBookmarked(final Long userId, final Long spaceId) {
+    public IsBookmarkedResponseDto readSpaceBookmark(final Long userId, final Long spaceId) {
 
         User user = findUser(userId);
         Space space = findSpace(spaceId);
 
-        if (!isBookMarked(user, space)) {
+        if (!isSpaceBookmarked(user, space)) {
             return IsBookmarkedResponseDto.of(false);
         }
         return IsBookmarkedResponseDto.of(true);
@@ -140,7 +136,7 @@ public class UserService {
         Space space = findSpace(spaceId);
 
         // 북마크 검사
-        if (isBookMarked(user, space)) {
+        if (isSpaceBookmarked(user, space)) {
             throw new ConflictException(Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION,
                     Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION.getMessage());
         }
@@ -185,7 +181,7 @@ public class UserService {
                         Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
-    private boolean isBookMarked(User user, Article article) {
+    private boolean isArticleBookmarked(User user, Article article) {
         Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
                 ArticleBookmarkRelationId.newInstance(article, user));
 
@@ -196,7 +192,7 @@ public class UserService {
         return true;
     }
 
-    private boolean isBookMarked(User user, Space space) {
+    private boolean isSpaceBookmarked(User user, Space space) {
         Optional<SpaceBookmarkRelation> relation = spaceBookmarkRelationRepository.findSpaceBookmarkRelationBySpaceBookmarkRelationId(
                 SpaceBookmarkRelationId.newInstance(user, space));
 
