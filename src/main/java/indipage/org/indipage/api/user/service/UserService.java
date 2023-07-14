@@ -85,10 +85,7 @@ public class UserService {
         User user = findUser(userId);
         Article article = findArticle(articleId);
 
-        Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
-                ArticleBookmarkRelationId.newInstance(article, user));
-
-        if (relation.isEmpty()) {
+        if (!isArticleBookmarked(user, article)) {
             return IsBookmarkedResponseDto.of(false);
         }
         return IsBookmarkedResponseDto.of(true);
