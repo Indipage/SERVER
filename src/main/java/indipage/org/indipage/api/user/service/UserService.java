@@ -104,7 +104,6 @@ public class UserService {
             throw new ConflictException(Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION,
                     Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION.getMessage());
         }
-        ;
 
         ArticleBookmarkRelation relation = ArticleBookmarkRelation.newInstance(article, user);
         articleBookmarkRelationRepository.save(relation);
