@@ -2,6 +2,7 @@ package indipage.org.indipage.api.user.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -228,6 +229,18 @@ public class UserService {
             Space space = relation.getSpace();
 
             result.add(SpaceDto.summaryOf(space));
+    }
+      
+    public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
+        User user = findUser(userId);
+        List<ReceivedTicketResponseDto> result = new ArrayList<>();
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(user);
+
+        for (InviteSpaceRelation relation : inviteRelations) {
+            Space spaceOfTicket = relation.getSpace();
+            Ticket ticket = ticketService.findTicketWithSpace(spaceOfTicket);
+
+            result.add(ReceivedTicketResponseDto.of(ticket, spaceOfTicket));
         }
         return result;
     }
