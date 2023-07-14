@@ -221,4 +221,9 @@ public class UserService {
         }
         return result;
     }
+
+    public void updateSlideAt(final Long userId) {
+        User user = findUser(userId);
+        user.updateSlideAt();
+    }
 }

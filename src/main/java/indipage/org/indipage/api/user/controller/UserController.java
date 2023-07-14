@@ -94,4 +94,11 @@ public class UserController {
     public ApiResponse<List<ArticleSummaryResponseDto>> readArticleBookmarkList() {
         return ApiResponse.success(Success.READ_ARTICLE_BOOKMARK_LIST_SUCCESS, userService.readArticleBookmarkList(1L));
     }
+
+    @PutMapping("/user/weekly/slide")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse UpdateSlideAt() {
+        userService.updateSlideAt(1L);
+        return ApiResponse.success(Success.UPDATE_SLIDE_AT_SUCCESS);
+    }
 }
