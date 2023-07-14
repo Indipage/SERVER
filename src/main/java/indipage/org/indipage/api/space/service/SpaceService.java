@@ -1,32 +1,22 @@
 package indipage.org.indipage.api.space.service;
 
 import indipage.org.indipage.api.article.service.ArticleService;
+import indipage.org.indipage.api.space.controller.dto.response.ArticleOfSpaceResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.BookRecommendationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceOfArticleResponseDto;
 import indipage.org.indipage.api.user.service.UserService;
-import indipage.org.indipage.domain.Article;
-import indipage.org.indipage.domain.FollowSpaceRelationRepository;
-import indipage.org.indipage.domain.InviteSpaceRelationRepository;
-import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
-import indipage.org.indipage.domain.Relation.FollowSpaceRelation;
-import indipage.org.indipage.domain.Relation.FollowSpaceRelationId;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
-import indipage.org.indipage.domain.Relation.SpaceTagRelation;
-import indipage.org.indipage.domain.Space;
-import indipage.org.indipage.domain.SpaceRepository;
-import indipage.org.indipage.domain.Tag;
-import indipage.org.indipage.domain.User;
+import indipage.org.indipage.domain.*;
+import indipage.org.indipage.domain.Relation.*;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -89,10 +79,10 @@ public class SpaceService {
         followSpaceRelationRepository.save(FollowSpaceRelation.create(user, space));
     }
 
-    public SpaceOfArticleResponseDto readArticleOfSpace(final Long spaceId) {
+    public ArticleOfSpaceResponseDto readArticleOfSpace(final Long spaceId) {
         Space space = findSpace(spaceId);
         Article article = articleService.findArticleBySpace(space);
-        return SpaceOfArticleResponseDto.of(space, article);
+        return ArticleOfSpaceResponseDto.of(space, article);
     }
 
     public Space findSpace(final Long spaceId) {
