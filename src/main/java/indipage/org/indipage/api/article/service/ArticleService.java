@@ -2,6 +2,7 @@ package indipage.org.indipage.api.article.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleResponseDto;
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.article.controller.dto.response.WeeklyArticleResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.Article;
@@ -13,6 +14,7 @@ import indipage.org.indipage.exception.model.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +55,11 @@ public class ArticleService {
         return articleRepository.findArticleBySpace(space).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
+    }
+
+    public WeeklyArticleResponseDto readWeeklyArticle(final Long userId) {
+        User user = userService.findUser(userId);
+        Article article = articleRepository.findIssuedArticle(LocalDateTime.now()).get(0);
+        return WeeklyArticleResponseDto.of(article.getSpace(), article, user);
     }
 }
