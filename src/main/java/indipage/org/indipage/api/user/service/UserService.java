@@ -238,7 +238,7 @@ public class UserService {
     public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
         User user = findUser(userId);
         List<ReceivedTicketResponseDto> result = new ArrayList<>();
-        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalseOrderByCreatedAtDesc(
                 user);
 
         for (InviteSpaceRelation relation : inviteRelations) {
