@@ -2,6 +2,7 @@ package indipage.org.indipage.api.article.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleResponseDto;
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.article.controller.dto.response.WeeklyArticleResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.Article;
@@ -63,5 +64,26 @@ public class ArticleService {
             throw new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION, Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage());
         }
         return article;
+    }
+
+    public WeeklyArticleResponseDto readWeeklyArticle() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Article articleOfThisWeek = findArticleOfThisWeek(now);
+        Article articleOfNextWeek = findArticleOfNextWeek(now);
+
+        return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek);
+    }
+
+    private Article findArticleOfThisWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsBeforeOrderByIssueDateDesc(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION.getMessage()));
+    }
+
+    private Article findArticleOfNextWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsAfterOrderByIssueDate(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION.getMessage()));
     }
 }

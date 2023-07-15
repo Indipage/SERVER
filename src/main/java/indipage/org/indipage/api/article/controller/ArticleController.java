@@ -2,6 +2,7 @@ package indipage.org.indipage.api.article.controller;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleResponseDto;
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.article.controller.dto.response.WeeklyArticleResponseDto;
 import indipage.org.indipage.api.article.service.ArticleService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
@@ -29,5 +30,11 @@ public class ArticleController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<ArticleSummaryResponseDto>> readArticleSummaryList() {
         return ApiResponse.success(Success.READ_ARTICLE_SUMMARY_LIST_SUCCESS, articleService.readArticleSummaryList(1L));
+    }
+
+    @GetMapping("/weekly")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<WeeklyArticleResponseDto> readWeeklyArticle() {
+        return ApiResponse.success(Success.READ_WEEKLY_ARTICLE_SUCCESS, articleService.readWeeklyArticle());
     }
 }

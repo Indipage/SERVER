@@ -1,6 +1,9 @@
 package indipage.org.indipage.api.user.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -203,7 +206,7 @@ public class UserService {
         return true;
     }
 
-    public List<ArticleSummaryResponseDto> readArticleBookmarkList(final long userId) {
+    public List<ArticleSummaryResponseDto> readArticleBookmarkList(final Long userId) {
         User user = findUser(userId);
         List<ArticleSummaryResponseDto> result = new ArrayList<>();
         List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUser(user);
@@ -215,6 +218,51 @@ public class UserService {
             boolean isInvited = ticketService.isInvited(user, space);
             result.add(ArticleSummaryResponseDto.of(article.getSpace(), article, isInvited));
         }
+        return result;
+    }
+
+    public List<SpaceDto> readSpaceBookmarkList(final Long userId) {
+        User user = findUser(userId);
+        List<SpaceDto> result = new ArrayList<>();
+        List<SpaceBookmarkRelation> bookmarkRelations = spaceBookmarkRelationRepository.findAllByUser(user);
+
+        for (SpaceBookmarkRelation relation : bookmarkRelations) {
+            Space space = relation.getSpace();
+
+            result.add(SpaceDto.summaryOf(space));
+        }
+
+        return result;
+    }
+
+    public List<ReceivedTicketResponseDto> readReceivedTicketList(final Long userId) {
+        User user = findUser(userId);
+        List<ReceivedTicketResponseDto> result = new ArrayList<>();
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalseOrderByCreatedAtDesc(
+                user);
+
+        for (InviteSpaceRelation relation : inviteRelations) {
+            Space spaceOfTicket = relation.getSpace();
+            Ticket ticket = ticketService.findTicketWithSpace(spaceOfTicket);
+
+            result.add(ReceivedTicketResponseDto.of(ticket, spaceOfTicket));
+        }
+        return result;
+    }
+
+    public List<ReceivedCardResponseDto> readReceivedCardList(final Long userId) {
+        User user = findUser(userId);
+        List<ReceivedCardResponseDto> result = new ArrayList<>();
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsTrueOrderByUpdatedAtDesc(
+                user);
+
+        for (InviteSpaceRelation relation : inviteRelations) {
+            Space spaceOfTicket = relation.getSpace();
+            Ticket ticket = ticketService.findTicketWithSpace(spaceOfTicket);
+
+            result.add(ReceivedCardResponseDto.of(ticket, relation, spaceOfTicket));
+        }
+
         return result;
     }
 }

@@ -4,6 +4,8 @@ import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.Space;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,6 +18,9 @@ public class ArticleOfSpaceResponseDto {
     private Long id;
     private String imageUrl;
 
+    private static boolean getIsIssued(Article article) {
+        return article.getIssueDate().isBefore(LocalDateTime.now());
+    }
 
     public static ArticleOfSpaceResponseDto of(Space space, Article article) {
         return ArticleOfSpaceResponseDto
@@ -24,6 +29,7 @@ public class ArticleOfSpaceResponseDto {
                 .title(article.getTitle())
                 .spaceType(space.getType().getTypeName())
                 .id(article.getId())
+                .imageUrl(article.getThumbnailUrl())
                 .build();
     }
 }
