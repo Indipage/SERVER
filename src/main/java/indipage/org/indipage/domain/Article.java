@@ -25,7 +25,7 @@ public class Article extends CreatedTimeBaseEntity {
     @Column(nullable = false)
     private String thumbnailUrl;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime issueDate;
 
     @OneToOne(fetch = FetchType.LAZY)
