@@ -25,8 +25,8 @@ public class WeeklyArticleResponseDto {
     private String thumbnailUrlOfNextWeek;
 
 
-    private static long calculateRemainingDays(LocalDateTime issueDate) {
-        return 7 - ChronoUnit.DAYS.between(issueDate, LocalDateTime.now());
+    private static long calculateRemainingDays(LocalDateTime nextIssueDate) {
+        return ChronoUnit.DAYS.between(LocalDateTime.now(), nextIssueDate) + 1;
     }
 
 
@@ -36,7 +36,7 @@ public class WeeklyArticleResponseDto {
                 .title(articleOfThisWeek.getTitle())
                 .spaceName(space.getName())
                 .spaceOwner(space.getOwner())
-                .remainingDays(calculateRemainingDays(articleOfThisWeek.getIssueDate()))
+                .remainingDays(calculateRemainingDays(articleOfNextWeek.getIssueDate()))
                 .thumbnailUrlOfThisWeek(articleOfThisWeek.getThumbnailUrl())
                 .thumbnailUrlOfNextWeek(articleOfNextWeek.getThumbnailUrl())
                 .build();
