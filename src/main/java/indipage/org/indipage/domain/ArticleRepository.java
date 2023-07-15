@@ -15,5 +15,9 @@ public interface ArticleRepository extends Repository<Article, Long> {
     Optional<Article> findArticleBySpace(Space space);
 
     @Query("SELECT a FROM Article AS a WHERE a.issueDate <= ?1 ORDER BY a.issueDate DESC")
-    List<Article> findIssuedArticle(LocalDateTime now);
+    List<Article> findArticleOfThisWeek(LocalDateTime now);
+
+    @Query("SELECT a FROM Article AS a WHERE a.issueDate > ?1 ORDER BY a.issueDate ASC")
+    List<Article> findArticleOfNextWeek(LocalDateTime now);
+
 }
