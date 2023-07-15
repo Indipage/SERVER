@@ -11,8 +11,6 @@ import indipage.org.indipage.domain.ArticleRepository;
 import indipage.org.indipage.domain.InviteSpaceRelationRepository;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
-import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
-import indipage.org.indipage.domain.Relation.SpaceBookmarkRelationId;
 import indipage.org.indipage.domain.Space;
 import indipage.org.indipage.domain.SpaceBookmarkRelationRepository;
 import indipage.org.indipage.domain.SpaceRepository;
@@ -56,7 +54,7 @@ public class UserService {
         Space space = findSpace(spaceId);
         Ticket ticket = ticketService.findTicketWithSpace(space);
 
-        if (ticketService.isInvited(user, space)) {
+        if (!ticketService.isInvited(user, space)) {
             return HasReceivedTicketResponseDto.of(ticket, false);
         }
         return HasReceivedTicketResponseDto.of(ticket, true);
@@ -97,13 +95,6 @@ public class UserService {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
-    }
-
-    private SpaceBookmarkRelation findSpaceBookmark(User user, Space space) {
-        return spaceBookmarkRelationRepository.findSpaceBookmarkRelationBySpaceBookmarkRelationId(
-                        SpaceBookmarkRelationId.newInstance(user, space))
-                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION,
-                        Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
 
