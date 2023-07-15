@@ -38,7 +38,7 @@ public class ArticleService {
     }
 
     public List<ArticleSummaryResponseDto> readArticleSummaryList(final Long userId) {
-        List<Article> articles = articleRepository.findAll();
+        List<Article> articles = articleRepository.findArticleByIssueDateIsBefore(LocalDateTime.now());
         List<ArticleSummaryResponseDto> result = new ArrayList<>();
         User user = userService.findUser(userId);
 
@@ -52,7 +52,7 @@ public class ArticleService {
     }
 
     public Article findArticleBySpace(final Space space) {
-        return articleRepository.findArticleBySpace(space).orElseThrow(
+        return articleRepository.findArticleBySpaceAndIssueDateIsBefore(space, LocalDateTime.now()).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
     }

@@ -9,11 +9,12 @@ import java.util.Optional;
 public interface ArticleRepository extends Repository<Article, Long> {
     Optional<Article> findById(Long id);
 
-    List<Article> findAll();
+    Optional<Article> findArticleBySpaceAndIssueDateIsBefore(Space space, LocalDateTime issueDate);
 
     Optional<Article> findArticleBySpace(Space space);
 
     Optional<Article> findTop1ByIssueDateIsBeforeOrderByIssueDateDesc(LocalDateTime now);
 
     Optional<Article> findTop1ByIssueDateIsAfterOrderByIssueDate(LocalDateTime now);
+    List<Article> findArticleByIssueDateIsBefore(LocalDateTime now);
 }
