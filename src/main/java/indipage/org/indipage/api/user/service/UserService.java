@@ -235,7 +235,7 @@ public class UserService {
         return result;
     }
 
-    public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
+    public List<ReceivedTicketResponseDto> readReceivedTicketList(final Long userId) {
         User user = findUser(userId);
         List<ReceivedTicketResponseDto> result = new ArrayList<>();
         List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalseOrderByCreatedAtDesc(
@@ -250,7 +250,7 @@ public class UserService {
         return result;
     }
 
-    public List<ReceivedCardResponseDto> readReceivedCard(final Long userId) {
+    public List<ReceivedCardResponseDto> readReceivedCardList(final Long userId) {
         User user = findUser(userId);
         List<ReceivedCardResponseDto> result = new ArrayList<>();
         List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsTrueOrderByUpdatedAtDesc(
