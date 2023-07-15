@@ -1,6 +1,7 @@
 package indipage.org.indipage.api.user.controller;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.article.controller.dto.response.HasSlideWeeklyArticleResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
@@ -104,13 +105,13 @@ public class UserController {
         userService.updateSlideAt(1L);
         return ApiResponse.success(Success.UPDATE_SLIDE_AT_SUCCESS);
     }
-  
+
     @GetMapping("/bookmark/space")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<SpaceDto>> readSpaceBookmarkList() {
         return ApiResponse.success(Success.READ_SPACE_BOOKMARK_LIST_SUCCESS, userService.readSpaceBookmarkList(1L));
     }
-  
+
     @GetMapping("/ticket")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<ReceivedTicketResponseDto>> readReceivedTicket() {
@@ -121,5 +122,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<ReceivedCardResponseDto>> readReceivedCard() {
         return ApiResponse.success(Success.READ_RECEIVED_CARD_SUCCESS, userService.readReceivedCardList(1L));
+    }
+
+    @GetMapping("/weekly/slide")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<HasSlideWeeklyArticleResponseDto> readHasSlideWeeklyArticle() {
+        return ApiResponse.success(Success.READ_HAS_SLIDE_WEEKLY_ARTICLE_SUCCESS, userService.readHasSlideWeeklyArticle(1L));
     }
 }
