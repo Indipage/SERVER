@@ -1,6 +1,7 @@
 package indipage.org.indipage.api.user.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.article.controller.dto.response.HasSlideWeeklyArticleResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -226,7 +228,7 @@ public class UserService {
         User user = findUser(userId);
         user.updateSlideAt();
     }
-  
+
     public List<SpaceDto> readSpaceBookmarkList(final Long userId) {
         User user = findUser(userId);
         List<SpaceDto> result = new ArrayList<>();
@@ -270,5 +272,20 @@ public class UserService {
         }
 
         return result;
+    }
+
+    public HasSlideWeeklyArticleResponseDto readHasSlideWeeklyArticle(final Long userId) {
+        User user = findUser(userId);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Article articleOfThisWeek = findArticleOfThisWeek(now);
+        return HasSlideWeeklyArticleResponseDto.of(user.getSlideAt().isAfter(articleOfThisWeek.getIssueDate()));
+    }
+
+    public Article findArticleOfThisWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsBeforeOrderByIssueDateDesc(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION.getMessage()));
     }
 }
