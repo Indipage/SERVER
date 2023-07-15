@@ -12,4 +12,6 @@ public interface InviteSpaceRelationRepository extends Repository<InviteSpaceRel
     void save(InviteSpaceRelation relation);
 
     List<InviteSpaceRelation> findAllByUserAndHasVisitedIsFalse(User user);
+
+    List<InviteSpaceRelation> findAllByUserAndHasVisitedIsTrueOrderByUpdatedAtDesc(User user);
 }
