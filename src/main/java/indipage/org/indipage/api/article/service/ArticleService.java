@@ -60,9 +60,21 @@ public class ArticleService {
     public WeeklyArticleResponseDto readWeeklyArticle() {
         LocalDateTime now = LocalDateTime.now();
 
-        Article articleOfThisWeek = articleRepository.findArticleOfThisWeek(now).get(0);
-        Article articleOfNextWeek = articleRepository.findArticleOfNextWeek(now).get(0);
+        Article articleOfThisWeek = findArticleOfThisWeek(now);
+        Article articleOfNextWeek = findArticleOfNextWeek(now);
 
         return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek);
+    }
+
+    private Article findArticleOfThisWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsBeforeOrderByIssueDateDesc(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION.getMessage()));
+    }
+
+    private Article findArticleOfNextWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsAfterOrderByIssueDate(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION.getMessage()));
     }
 }
