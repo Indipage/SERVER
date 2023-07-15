@@ -25,6 +25,9 @@ public class WeeklyArticleResponseDto {
 
     private Boolean hasSlide;
 
+    private String thumbnailUrlOfThisWeek;
+    private String thumbnailUrlOfNextWeek;
+
 
     private static long calculateRemainingDays(LocalDateTime issueDate) {
         return 7 - ChronoUnit.DAYS.between(issueDate, LocalDateTime.now());
@@ -40,14 +43,16 @@ public class WeeklyArticleResponseDto {
         return slideAtToLocalDate.isEqual(issueDateToLocalDate) || slideAtToLocalDate.isAfter(issueDateToLocalDate);
     }
 
-    public static WeeklyArticleResponseDto of(Space space, Article article, User user) {
+    public static WeeklyArticleResponseDto of(Space space, Article articleOfThisWeek, Article articleOfNextWeek, User user) {
         return WeeklyArticleResponseDto.builder()
-                .id(article.getId())
-                .title(article.getTitle())
+                .id(articleOfThisWeek.getId())
+                .title(articleOfThisWeek.getTitle())
                 .spaceName(space.getName())
                 .spaceOwner(space.getOwner())
-                .remainingDays(calculateRemainingDays(article.getIssueDate()))
-                .hasSlide(getHasSlide(article.getIssueDate(), user))
+                .remainingDays(calculateRemainingDays(articleOfThisWeek.getIssueDate()))
+                .hasSlide(getHasSlide(articleOfThisWeek.getIssueDate(), user))
+                .thumbnailUrlOfThisWeek(articleOfThisWeek.getThumbnailUrl())
+                .thumbnailUrlOfNextWeek(articleOfNextWeek.getThumbnailUrl())
                 .build();
     }
 }
