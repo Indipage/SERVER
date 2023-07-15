@@ -38,15 +38,11 @@ public class ArticleService {
     }
 
     public List<ArticleSummaryResponseDto> readArticleSummaryList(final Long userId) {
-        List<Article> articles = articleRepository.findAll();
+        List<Article> articles = articleRepository.findArticleByIssueDateIsBefore(LocalDateTime.now());
         List<ArticleSummaryResponseDto> result = new ArrayList<>();
         User user = userService.findUser(userId);
 
         for (Article article : articles) {
-            if (article.getIssueDate().isAfter(LocalDateTime.now()) || article.getIssueDate().isEqual(LocalDateTime.now())) {
-                continue;
-            }
-
             Space space = article.getSpace();
             boolean isInvited = ticketService.isInvited(user, space);
             result.add(ArticleSummaryResponseDto.of(space, article, isInvited));
@@ -56,14 +52,9 @@ public class ArticleService {
     }
 
     public Article findArticleBySpace(final Space space) {
-        Article article = articleRepository.findArticleBySpace(space).orElseThrow(
+        return articleRepository.findArticleBySpaceAndIssueDateIsBefore(space, LocalDateTime.now()).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
-
-        if (article.getIssueDate().isAfter(LocalDateTime.now()) || article.getIssueDate().isEqual(LocalDateTime.now())) {
-            throw new NotFoundException(Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION, Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage());
-        }
-        return article;
     }
 
     public WeeklyArticleResponseDto readWeeklyArticle() {
