@@ -57,11 +57,12 @@ public class ArticleService {
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
     }
 
-    public WeeklyArticleResponseDto readWeeklyArticle(final Long userId) {
-        User user = userService.findUser(userId);
-        Article articleOfThisWeek = articleRepository.findArticleOfThisWeek(LocalDateTime.now()).get(0);
-        Article articleOfNextWeek = articleRepository.findArticleOfNextWeek(LocalDateTime.now()).get(0);
+    public WeeklyArticleResponseDto readWeeklyArticle() {
+        LocalDateTime now = LocalDateTime.now();
 
-        return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek, user);
+        Article articleOfThisWeek = articleRepository.findArticleOfThisWeek(now).get(0);
+        Article articleOfNextWeek = articleRepository.findArticleOfNextWeek(now).get(0);
+
+        return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek);
     }
 }
