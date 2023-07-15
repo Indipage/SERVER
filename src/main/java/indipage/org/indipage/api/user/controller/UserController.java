@@ -98,6 +98,13 @@ public class UserController {
         return ApiResponse.success(Success.READ_ARTICLE_BOOKMARK_LIST_SUCCESS, userService.readArticleBookmarkList(1L));
     }
 
+    @PutMapping("/weekly/slide")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse UpdateSlideAt() {
+        userService.updateSlideAt(1L);
+        return ApiResponse.success(Success.UPDATE_SLIDE_AT_SUCCESS);
+    }
+  
     @GetMapping("/bookmark/space")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<SpaceDto>> readSpaceBookmarkList() {

@@ -33,4 +33,8 @@ public class User extends CreatedTimeBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<SpaceBookmarkRelation> spaceBookmarkRelations = new ArrayList<>();
+
+    public void updateSlideAt() {
+        this.slideAt = LocalDateTime.now();
+    }
 }
