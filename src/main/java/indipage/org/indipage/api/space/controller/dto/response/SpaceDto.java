@@ -32,6 +32,13 @@ public class SpaceDto {
     private String peculiarityImageUrl;
     private List<TagDto> tagList;
 
+    private SpaceDto(Long id, String name, String imageUrl, String roadAddress) {
+        this.id = id;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.roadAddress = roadAddress;
+    }
+
     public static SpaceDto of(Space space, List<Tag> tagList) {
 
         return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getRoadAddress(),
@@ -39,5 +46,10 @@ public class SpaceDto {
                 space.getIntroduction(), space.getPeculiarityTitle(),
                 space.getPeculiarityContent(), space.getPeculiarityImageUrl(),
                 tagList.stream().map(TagDto::of).collect(Collectors.toList()));
+    }
+
+    public static SpaceDto summaryOf(Space space) {
+
+        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getRoadAddress());
     }
 }
