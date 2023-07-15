@@ -229,12 +229,16 @@ public class UserService {
             Space space = relation.getSpace();
 
             result.add(SpaceDto.summaryOf(space));
+        }
+
+        return result;
     }
-      
+
     public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
         User user = findUser(userId);
         List<ReceivedTicketResponseDto> result = new ArrayList<>();
-        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(user);
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(
+                user);
 
         for (InviteSpaceRelation relation : inviteRelations) {
             Space spaceOfTicket = relation.getSpace();
