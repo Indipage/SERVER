@@ -23,6 +23,7 @@ public class TicketService {
 
     public boolean isInvited(User user, Space space) {
         return inviteSpaceRelationRepository.findByInviteSpaceRelationId(
-                new InviteSpaceRelationId(user.getId(), space.getId())).isPresent();
+                InviteSpaceRelationId.newInstance(user, space)
+        ).isPresent();
     }
 }
