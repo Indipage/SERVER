@@ -2,6 +2,7 @@ package indipage.org.indipage.api.user.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
@@ -234,10 +235,10 @@ public class UserService {
         return result;
     }
 
-    public List<ReceivedTicketResponseDto> readReceivedTicket(final Long userId) {
+    public List<ReceivedTicketResponseDto> readReceivedTicketList(final Long userId) {
         User user = findUser(userId);
         List<ReceivedTicketResponseDto> result = new ArrayList<>();
-        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalse(
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsFalseOrderByCreatedAtDesc(
                 user);
 
         for (InviteSpaceRelation relation : inviteRelations) {
@@ -246,6 +247,22 @@ public class UserService {
 
             result.add(ReceivedTicketResponseDto.of(ticket, spaceOfTicket));
         }
+        return result;
+    }
+
+    public List<ReceivedCardResponseDto> readReceivedCardList(final Long userId) {
+        User user = findUser(userId);
+        List<ReceivedCardResponseDto> result = new ArrayList<>();
+        List<InviteSpaceRelation> inviteRelations = inviteSpaceRelationRepository.findAllByUserAndHasVisitedIsTrueOrderByUpdatedAtDesc(
+                user);
+
+        for (InviteSpaceRelation relation : inviteRelations) {
+            Space spaceOfTicket = relation.getSpace();
+            Ticket ticket = ticketService.findTicketWithSpace(spaceOfTicket);
+
+            result.add(ReceivedCardResponseDto.of(ticket, relation, spaceOfTicket));
+        }
+
         return result;
     }
 }

@@ -2,6 +2,7 @@ package indipage.org.indipage.api.user.controller;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -106,6 +107,12 @@ public class UserController {
     @GetMapping("/ticket")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<List<ReceivedTicketResponseDto>> readReceivedTicket() {
-        return ApiResponse.success(Success.READ_RECEIVED_TICKET_SUCCESS, userService.readReceivedTicket(1L));
+        return ApiResponse.success(Success.READ_RECEIVED_TICKET_SUCCESS, userService.readReceivedTicketList(1L));
+    }
+
+    @GetMapping("/card")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<List<ReceivedCardResponseDto>> readReceivedCard() {
+        return ApiResponse.success(Success.READ_RECEIVED_CARD_SUCCESS, userService.readReceivedCardList(1L));
     }
 }
