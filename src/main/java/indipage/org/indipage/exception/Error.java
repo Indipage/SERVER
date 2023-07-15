@@ -29,6 +29,8 @@ public enum Error {
     NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION(HttpStatus.NOT_FOUND, "해당 아티클에 대한 북마크가 존재하지 않습니다."),
     NOT_FOUND_SPACE_BOOKMARK_EXCEPTION(HttpStatus.NOT_FOUND, "해당 공간에 대한 북마크가 존재하지 않습니다."),
     NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION(HttpStatus.NOT_FOUND, "해당 공간에 대한 아티클이 존재하지 않습니다."),
+    NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION(HttpStatus.NOT_FOUND, "이번주에 발행될 아티클이 존재하지 않습니다."),
+    NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION(HttpStatus.NOT_FOUND, "다음주에 발행될 아티클이 존재하지 않습니다."),
     /**
      * 409 CONFLICT
      */

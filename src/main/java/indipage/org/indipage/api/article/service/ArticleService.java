@@ -57,9 +57,24 @@ public class ArticleService {
                         Error.NOT_FOUND_SPACE_OF_ARTICLE_EXCEPTION.getMessage()));
     }
 
-    public WeeklyArticleResponseDto readWeeklyArticle(final Long userId) {
-        User user = userService.findUser(userId);
-        Article article = articleRepository.findIssuedArticle(LocalDateTime.now()).get(0);
-        return WeeklyArticleResponseDto.of(article.getSpace(), article, user);
+    public WeeklyArticleResponseDto readWeeklyArticle() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Article articleOfThisWeek = findArticleOfThisWeek(now);
+        Article articleOfNextWeek = findArticleOfNextWeek(now);
+
+        return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek);
+    }
+
+    private Article findArticleOfThisWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsBeforeOrderByIssueDateDesc(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_THIS_WEEK_EXCEPTION.getMessage()));
+    }
+
+    private Article findArticleOfNextWeek(LocalDateTime now) {
+        return articleRepository.findTop1ByIssueDateIsAfterOrderByIssueDate(now).orElseThrow(
+                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION,
+                        Error.NOT_FOUND_ARTICLE_OF_NEXT_WEEK_EXCEPTION.getMessage()));
     }
 }

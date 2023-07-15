@@ -29,6 +29,8 @@ public enum Success {
     READ_ARTICLE_BOOKMARK_LIST_SUCCESS(HttpStatus.OK, "북마크한 아티클 목록 조회 성공"),
     READ_WEEKLY_ARTICLE_SUCCESS(HttpStatus.OK, "위클리 아티클 조회 성공했습니다"),
     UPDATE_SLIDE_AT_SUCCESS(HttpStatus.OK, "유저가 슬라이드한 날짜 업데이트 성공"),
+    READ_SPACE_BOOKMARK_LIST_SUCCESS(HttpStatus.OK, "북마크한 공간 목록 조회에 성공했습니다."),
+    READ_RECEIVED_TICKET_SUCCESS(HttpStatus.OK, "수령한 티켓 목록 조회에 성공했습니다."),
     /**
      * 201 CREATED
      */

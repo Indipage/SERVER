@@ -1,6 +1,8 @@
 package indipage.org.indipage.api.user.controller;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
+import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
@@ -51,7 +53,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<IsBookmarkedResponseDto> readIsArticleBookMarked(@PathVariable Long articleId) {
         return ApiResponse.success(Success.READ_IS_ARTICLE_BOOKMARKED_SUCCESS,
-                userService.readIsArticleBookMarked(1L, articleId));
+                userService.readArticleBookmark(1L, articleId));
     }
 
     @PostMapping("/bookmark/article/{articleId}")
@@ -72,7 +74,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<IsBookmarkedResponseDto> readIsSpaceBookmarked(@PathVariable Long spaceId) {
         return ApiResponse.success(Success.READ_IS_SPACE_BOOKMARKED_SUCCESS,
-                userService.readIsSpaceBookmarked(1L, spaceId));
+                userService.readSpaceBookmark(1L, spaceId));
     }
 
     @PostMapping("/bookmark/space/{spaceId}")
@@ -100,5 +102,17 @@ public class UserController {
     public ApiResponse UpdateSlideAt() {
         userService.updateSlideAt(1L);
         return ApiResponse.success(Success.UPDATE_SLIDE_AT_SUCCESS);
+    }
+  
+    @GetMapping("/bookmark/space")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<List<SpaceDto>> readSpaceBookmarkList() {
+        return ApiResponse.success(Success.READ_SPACE_BOOKMARK_LIST_SUCCESS, userService.readSpaceBookmarkList(1L));
+    }
+  
+    @GetMapping("/ticket")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<List<ReceivedTicketResponseDto>> readReceivedTicket() {
+        return ApiResponse.success(Success.READ_RECEIVED_TICKET_SUCCESS, userService.readReceivedTicket(1L));
     }
 }

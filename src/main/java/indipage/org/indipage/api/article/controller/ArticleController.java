@@ -35,6 +35,6 @@ public class ArticleController {
     @GetMapping("/weekly")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<WeeklyArticleResponseDto> readWeeklyArticle() {
-        return ApiResponse.success(Success.READ_WEEKLY_ARTICLE_SUCCESS, articleService.readWeeklyArticle(1L));
+        return ApiResponse.success(Success.READ_WEEKLY_ARTICLE_SUCCESS, articleService.readWeeklyArticle());
     }
 }
