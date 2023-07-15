@@ -1,27 +1,33 @@
 package indipage.org.indipage.api.user.service;
 
-import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.article.controller.dto.response.HasSlideWeeklyArticleResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
-import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
-import indipage.org.indipage.domain.*;
-import indipage.org.indipage.domain.Relation.*;
+import indipage.org.indipage.domain.Article;
+import indipage.org.indipage.domain.ArticleRepository;
+import indipage.org.indipage.domain.InviteSpaceRelationRepository;
+import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
+import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
+import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
+import indipage.org.indipage.domain.Relation.SpaceBookmarkRelationId;
+import indipage.org.indipage.domain.Space;
+import indipage.org.indipage.domain.SpaceBookmarkRelationRepository;
+import indipage.org.indipage.domain.SpaceRepository;
+import indipage.org.indipage.domain.Ticket;
+import indipage.org.indipage.domain.User;
+import indipage.org.indipage.domain.UserRepository;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +37,6 @@ public class UserService {
     private final ArticleRepository articleRepository;
     private final SpaceRepository spaceRepository;
     private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
-    private final ArticleBookmarkRelationRepository articleBookmarkRelationRepository;
     private final SpaceBookmarkRelationRepository spaceBookmarkRelationRepository;
 
 
@@ -88,95 +93,10 @@ public class UserService {
         inviteSpaceRelationRepository.save(relation);
     }
 
-    public IsBookmarkedResponseDto readArticleBookmark(final Long userId, final Long articleId) {
-
-        User user = findUser(userId);
-        Article article = findArticle(articleId);
-
-        if (!isArticleBookmarked(user, article)) {
-            return IsBookmarkedResponseDto.of(false);
-        }
-        return IsBookmarkedResponseDto.of(true);
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void createArticleBookmark(final Long userId, final Long articleId) {
-        User user = findUser(userId);
-        Article article = findArticle(articleId);
-
-        // 북마크 검사
-        if (isArticleBookmarked(user, article)) {
-            throw new ConflictException(Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION,
-                    Error.ALREADY_BOOKMARKED_ARTICLE_EXCEPTION.getMessage());
-        }
-
-        ArticleBookmarkRelation relation = ArticleBookmarkRelation.newInstance(article, user);
-        articleBookmarkRelationRepository.save(relation);
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void deleteArticleBookmark(final Long userId, final Long articleId) {
-        User user = findUser(userId);
-        Article article = findArticle(articleId);
-
-        ArticleBookmarkRelation relation = findArticleBookmark(user, article);
-
-        articleBookmarkRelationRepository.delete(relation);
-    }
-
-    public IsBookmarkedResponseDto readSpaceBookmark(final Long userId, final Long spaceId) {
-
-        User user = findUser(userId);
-        Space space = findSpace(spaceId);
-
-        if (!isSpaceBookmarked(user, space)) {
-            return IsBookmarkedResponseDto.of(false);
-        }
-        return IsBookmarkedResponseDto.of(true);
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void createSpaceBookmark(final Long userId, final Long spaceId) {
-        User user = findUser(userId);
-        Space space = findSpace(spaceId);
-
-        // 북마크 검사
-        if (isSpaceBookmarked(user, space)) {
-            throw new ConflictException(Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION,
-                    Error.ALREADY_BOOKMARKED_SPACE_EXCEPTION.getMessage());
-        }
-
-        SpaceBookmarkRelation relation = SpaceBookmarkRelation.newInstance(space, user);
-        spaceBookmarkRelationRepository.save(relation);
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void deleteSpaceBookmark(final Long userId, final Long spaceId) {
-        User user = findUser(userId);
-        Space space = findSpace(spaceId);
-
-        SpaceBookmarkRelation relation = findSpaceBookmark(user, space);
-
-        spaceBookmarkRelationRepository.delete(relation);
-    }
-
     private Space findSpace(Long spaceId) {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
-    }
-
-    private Article findArticle(Long articleId) {
-        return articleRepository.findById(articleId).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_ARTICLE_EXCEPTION,
-                        Error.NOT_FOUND_ARTICLE_EXCEPTION.getMessage()));
-    }
-
-    private ArticleBookmarkRelation findArticleBookmark(User user, Article article) {
-        return articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
-                        ArticleBookmarkRelationId.newInstance(article, user))
-                .orElseThrow(() -> new NotFoundException(Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION,
-                        Error.NOT_FOUND_ARTICLE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
     private SpaceBookmarkRelation findSpaceBookmark(User user, Space space) {
@@ -186,42 +106,6 @@ public class UserService {
                         Error.NOT_FOUND_SPACE_BOOKMARK_EXCEPTION.getMessage()));
     }
 
-    private boolean isArticleBookmarked(User user, Article article) {
-        Optional<ArticleBookmarkRelation> relation = articleBookmarkRelationRepository.findArticleBookmarkRelationByArticleBookmarkRelationId(
-                ArticleBookmarkRelationId.newInstance(article, user));
-
-        if (relation.isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean isSpaceBookmarked(User user, Space space) {
-        Optional<SpaceBookmarkRelation> relation = spaceBookmarkRelationRepository.findSpaceBookmarkRelationBySpaceBookmarkRelationId(
-                SpaceBookmarkRelationId.newInstance(user, space));
-
-        if (relation.isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public List<ArticleSummaryResponseDto> readArticleBookmarkList(final Long userId) {
-        User user = findUser(userId);
-        List<ArticleSummaryResponseDto> result = new ArrayList<>();
-        List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUser(user);
-
-        for (ArticleBookmarkRelation relation : bookmarkRelations) {
-            Article article = relation.getArticle();
-            Space space = article.getSpace();
-
-            boolean isInvited = ticketService.isInvited(user, space);
-            result.add(ArticleSummaryResponseDto.of(article.getSpace(), article, isInvited));
-        }
-        return result;
-    }
 
     @Transactional
     public void updateSlideAt(final Long userId) {
@@ -229,19 +113,6 @@ public class UserService {
         user.updateSlideAt();
     }
 
-    public List<SpaceDto> readSpaceBookmarkList(final Long userId) {
-        User user = findUser(userId);
-        List<SpaceDto> result = new ArrayList<>();
-        List<SpaceBookmarkRelation> bookmarkRelations = spaceBookmarkRelationRepository.findAllByUser(user);
-
-        for (SpaceBookmarkRelation relation : bookmarkRelations) {
-            Space space = relation.getSpace();
-
-            result.add(SpaceDto.summaryOf(space));
-        }
-
-        return result;
-    }
 
     public List<ReceivedTicketResponseDto> readReceivedTicketList(final Long userId) {
         User user = findUser(userId);

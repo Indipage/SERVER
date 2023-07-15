@@ -1,22 +1,23 @@
 package indipage.org.indipage.api.user.controller;
 
-import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.article.controller.dto.response.HasSlideWeeklyArticleResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedCardResponseDto;
 import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
-import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
@@ -51,53 +52,6 @@ public class UserController {
         return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
     }
 
-    @GetMapping("/bookmark/article/{articleId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<IsBookmarkedResponseDto> readIsArticleBookMarked(@PathVariable Long articleId) {
-        return ApiResponse.success(Success.READ_IS_ARTICLE_BOOKMARKED_SUCCESS,
-                userService.readArticleBookmark(1L, articleId));
-    }
-
-    @PostMapping("/bookmark/article/{articleId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse createArticleBookmark(@PathVariable Long articleId) {
-        userService.createArticleBookmark(1L, articleId);
-        return ApiResponse.success(Success.CREATE_ARTICLE_BOOKMARK_SUCCESS);
-    }
-
-    @DeleteMapping("/bookmark/article/{articleId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse deleteArticleBookmark(@PathVariable Long articleId) {
-        userService.deleteArticleBookmark(1L, articleId);
-        return ApiResponse.success(Success.DELETE_ARTICLE_BOOKMARK_SUCCESS);
-    }
-
-    @GetMapping("/bookmark/space/{spaceId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<IsBookmarkedResponseDto> readIsSpaceBookmarked(@PathVariable Long spaceId) {
-        return ApiResponse.success(Success.READ_IS_SPACE_BOOKMARKED_SUCCESS,
-                userService.readSpaceBookmark(1L, spaceId));
-    }
-
-    @PostMapping("/bookmark/space/{spaceId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse createSpaceBookmark(@PathVariable @NotNull Long spaceId) {
-        userService.createSpaceBookmark(1L, spaceId);
-        return ApiResponse.success(Success.CREATE_SPACE_BOOKMARK_SUCCESS);
-    }
-
-    @DeleteMapping("/bookmark/space/{spaceId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse deleteSpaceBookmark(@PathVariable Long spaceId) {
-        userService.deleteSpaceBookmark(1L, spaceId);
-        return ApiResponse.success(Success.DELETE_SPACE_BOOKMARK_SUCCESS);
-    }
-
-    @GetMapping("/bookmark/article")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<ArticleSummaryResponseDto>> readArticleBookmarkList() {
-        return ApiResponse.success(Success.READ_ARTICLE_BOOKMARK_LIST_SUCCESS, userService.readArticleBookmarkList(1L));
-    }
 
     @PutMapping("/weekly/slide")
     @ResponseStatus(HttpStatus.OK)
@@ -106,11 +60,6 @@ public class UserController {
         return ApiResponse.success(Success.UPDATE_SLIDE_AT_SUCCESS);
     }
 
-    @GetMapping("/bookmark/space")
-    @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<SpaceDto>> readSpaceBookmarkList() {
-        return ApiResponse.success(Success.READ_SPACE_BOOKMARK_LIST_SUCCESS, userService.readSpaceBookmarkList(1L));
-    }
 
     @GetMapping("/ticket")
     @ResponseStatus(HttpStatus.OK)
