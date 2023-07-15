@@ -59,7 +59,9 @@ public class ArticleService {
 
     public WeeklyArticleResponseDto readWeeklyArticle(final Long userId) {
         User user = userService.findUser(userId);
-        Article article = articleRepository.findIssuedArticle(LocalDateTime.now()).get(0);
-        return WeeklyArticleResponseDto.of(article.getSpace(), article, user);
+        Article articleOfThisWeek = articleRepository.findArticleOfThisWeek(LocalDateTime.now()).get(0);
+        Article articleOfNextWeek = articleRepository.findArticleOfNextWeek(LocalDateTime.now()).get(0);
+
+        return WeeklyArticleResponseDto.of(articleOfThisWeek.getSpace(), articleOfThisWeek, articleOfNextWeek, user);
     }
 }
