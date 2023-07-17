@@ -2,20 +2,13 @@ package indipage.org.indipage.domain;
 
 import indipage.org.indipage.domain.Relation.BookRecommendationRelation;
 import indipage.org.indipage.domain.Relation.SpaceTagRelation;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -58,6 +51,10 @@ public class Space {
 
     @Column
     private String peculiarityImageUrl;
+
+    @Column
+    @Embedded
+    private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space")
     private List<BookRecommendationRelation> bookRecommendationRelations = new ArrayList<>();
