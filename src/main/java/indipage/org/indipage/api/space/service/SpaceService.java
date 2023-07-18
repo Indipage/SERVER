@@ -100,7 +100,7 @@ public class SpaceService {
     private HashMap<String, List<SpaceSearchResponseDto>> getResultWithSearchWord(final String searchWord) {
         List<Space> spaces = spaceRepository.searchByAddress(searchWord);
 
-        HashMap<String, List<SpaceSearchResponseDto>> resultMap = new HashMap<>();
+        HashMap<String, List<SpaceSearchResponseDto>> resultMap = new LinkedHashMap<>();
 
         for (Space space : spaces) {
             String categoryName = getCategoryNameOfAddress(space);
