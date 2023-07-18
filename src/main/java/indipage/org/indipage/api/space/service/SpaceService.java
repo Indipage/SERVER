@@ -1,10 +1,7 @@
 package indipage.org.indipage.api.space.service;
 
 import indipage.org.indipage.api.article.service.ArticleService;
-import indipage.org.indipage.api.space.controller.dto.response.ArticleOfSpaceResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.BookRecommendationResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.space.controller.dto.response.*;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.*;
@@ -89,6 +86,17 @@ public class SpaceService {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+    }
+
+    public List<SpaceSearchResponseDto> searchSpace(String searchWord) {
+
+        List<Space> spaces = spaceRepository.searchByAddress(searchWord);
+
+        List<SpaceSearchResponseDto> result = new ArrayList<>();
+        for (Space space : spaces) {
+            result.add(SpaceSearchResponseDto.of(space));
+        }
+        return result;
     }
 
     private boolean isFollowSpace(final Long userId, final Long spaceId) {
