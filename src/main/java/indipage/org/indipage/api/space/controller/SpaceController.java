@@ -49,7 +49,7 @@ public class SpaceController {
     }
 
     @GetMapping("/{spaceId}/article")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public ApiResponse<ArticleOfSpaceResponseDto> readArticleOfSpace(@PathVariable final Long spaceId) {
         return ApiResponse.success(Success.READ_ARTICLE_OF_SPACE_SUCCESS, spaceService.readArticleOfSpace(spaceId));
     }
