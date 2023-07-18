@@ -33,6 +33,7 @@ public enum Success {
     READ_RECEIVED_TICKET_SUCCESS(HttpStatus.OK, "수령한 티켓 목록 조회에 성공했습니다."),
     READ_RECEIVED_CARD_SUCCESS(HttpStatus.OK, "수령한 카드 목록 조회에 성공했습니다."),
     READ_HAS_SLIDE_WEEKLY_ARTICLE_SUCCESS(HttpStatus.OK, "위클리 아티클 슬라이드 여부 조회에 성공했습니다."),
+    SEARCH_SPACE_SUCCESS(HttpStatus.OK, "공간 검색에 성공했습니다."),
     /**
      * 201 CREATED
      */
