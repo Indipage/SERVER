@@ -12,4 +12,6 @@ public interface SpaceRepository extends Repository<Space, Long> {
 
     @Query(value = "SELECT * FROM space s WHERE MATCH(s.base_government, s.city, s.metro_government, s.road_name, s.town, s.detail) AGAINST(:searchTerm)", nativeQuery = true)
     List<Space> searchByAddress(@Param("searchTerm") String searchTerm);
+
+    List<Space> findAll();
 }
