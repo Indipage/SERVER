@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,15 +90,41 @@ public class SpaceService {
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
     }
 
-    public List<SpaceSearchResponseDto> searchSpace(String searchWord) {
+    public List<SpaceSearchWithCategoryResponseDto> searchSpace(String searchWord) {
 
-        List<Space> spaces = spaceRepository.searchByAddress(searchWord);
+        List<Space> spaces = findResultOfSearch(searchWord);
 
-        List<SpaceSearchResponseDto> result = new ArrayList<>();
+        HashMap<String, List<SpaceSearchResponseDto>> resultMap = new HashMap<>();
+
         for (Space space : spaces) {
-            result.add(SpaceSearchResponseDto.of(space));
+            String categoryName = getAddressCategoryName(space);
+
+            List<SpaceSearchResponseDto> resultList = resultMap.computeIfAbsent(categoryName, k -> new ArrayList<>());
+            resultList.add(SpaceSearchResponseDto.of(space));
         }
+
+        List<SpaceSearchWithCategoryResponseDto> result = new ArrayList<>();
+
+        for (String key : resultMap.keySet()) {
+            result.add(SpaceSearchWithCategoryResponseDto.of(key, resultMap.get(key)));
+        }
+
         return result;
+    }
+
+    private List<Space> findResultOfSearch(String searchWord) {
+        if (Objects.equals(searchWord, "")) {
+            return spaceRepository.findAll();
+        }
+        return spaceRepository.searchByAddress(searchWord);
+    }
+
+    private String getAddressCategoryName(Space space) {
+        String metroGovernment = space.getAddress().getMetroGovernment();
+        if (metroGovernment.equals("제주") || metroGovernment.equals("세종")) {
+            return metroGovernment;
+        }
+        return space.getAddress().getBaseGovernment();
     }
 
     private boolean isFollowSpace(final Long userId, final Long spaceId) {
