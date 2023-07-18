@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,19 +87,37 @@ public class SpaceService {
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
     }
 
-    public List<SpaceSearchWithCategoryResponseDto> searchSpace(String searchWord) {
+    private List<SpaceSearchWithCategoryResponseDto> getResultWithoutSearchWord() {
+        List<Space> spaces = spaceRepository.findAll();
+        List<SpaceSearchResponseDto> result = new ArrayList<>();
 
-        List<Space> spaces = findResultOfSearch(searchWord);
+        for (Space space : spaces) {
+            result.add(SpaceSearchResponseDto.of(space));
+        }
+        return new ArrayList<>(Collections.singletonList(SpaceSearchWithCategoryResponseDto.of("전체", result)));
+    }
+
+    private HashMap<String, List<SpaceSearchResponseDto>> getResultWithSearchWord(final String searchWord) {
+        List<Space> spaces = spaceRepository.searchByAddress(searchWord);
 
         HashMap<String, List<SpaceSearchResponseDto>> resultMap = new HashMap<>();
 
         for (Space space : spaces) {
-            String categoryName = getAddressCategoryName(space);
+            String categoryName = getCategoryNameOfAddress(space);
 
             List<SpaceSearchResponseDto> resultList = resultMap.computeIfAbsent(categoryName, k -> new ArrayList<>());
             resultList.add(SpaceSearchResponseDto.of(space));
         }
+        return resultMap;
+    }
 
+    public List<SpaceSearchWithCategoryResponseDto> searchSpace(Optional<String> searchWord) {
+
+        if (searchWord.isEmpty()) {
+            return getResultWithoutSearchWord();
+        }
+
+        HashMap<String, List<SpaceSearchResponseDto>> resultMap = getResultWithSearchWord(searchWord.get());
         List<SpaceSearchWithCategoryResponseDto> result = new ArrayList<>();
 
         for (String key : resultMap.keySet()) {
@@ -112,14 +127,7 @@ public class SpaceService {
         return result;
     }
 
-    private List<Space> findResultOfSearch(String searchWord) {
-        if (Objects.equals(searchWord, "")) {
-            return spaceRepository.findAll();
-        }
-        return spaceRepository.searchByAddress(searchWord);
-    }
-
-    private String getAddressCategoryName(Space space) {
+    private String getCategoryNameOfAddress(Space space) {
         String metroGovernment = space.getAddress().getMetroGovernment();
         if (metroGovernment.equals("제주") || metroGovernment.equals("세종")) {
             return metroGovernment;

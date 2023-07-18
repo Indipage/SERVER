@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -60,7 +61,7 @@ public class SpaceController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<SpaceSearchWithCategoryResponseDto>> searchWithAddress(@RequestParam("keyword") String searchWord) {
+    public ApiResponse<List<SpaceSearchWithCategoryResponseDto>> searchWithAddress(@RequestParam(value = "keyword") Optional<String> searchWord) {
         return ApiResponse.success(Success.SEARCH_SPACE_SUCCESS, spaceService.searchSpace(searchWord));
     }
 }
