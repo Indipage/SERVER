@@ -15,7 +15,6 @@ public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime createdAt;
     private LocalDateTime issueDate;
     private String thumbnailUrl;
 
@@ -27,7 +26,6 @@ public class ArticleResponseDto {
         return ArticleResponseDto.builder().id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .createdAt(article.getCreatedAt())
                 .issueDate(article.getIssueDate())
                 .thumbnailUrl(article.getThumbnailUrl())
                 .spaceId(space.getId())
