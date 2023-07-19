@@ -41,7 +41,7 @@ public class SpaceDto {
 
     public static SpaceDto of(Space space, List<Tag> tagList) {
 
-        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getRoadAddress(),
+        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getAddress().toString(),
                 space.getType(), space.getOwner(), space.getOperatingTime(), space.getClosedDays(),
                 space.getIntroduction(), space.getPeculiarityTitle(),
                 space.getPeculiarityContent(), space.getPeculiarityImageUrl(),
@@ -50,6 +50,6 @@ public class SpaceDto {
 
     public static SpaceDto summaryOf(Space space) {
 
-        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getRoadAddress());
+        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getAddress().toString());
     }
 }
