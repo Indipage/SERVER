@@ -111,7 +111,25 @@ public class SpaceService {
         return resultMap;
     }
 
-    public List<SpaceSearchWithCategoryResponseDto> searchSpace(Optional<String> searchWord) {
+    private List<Space> getResultOfSearch(Optional<String> searchWord) {
+        if (searchWord.isEmpty()) {
+            return spaceRepository.findAll();
+        }
+        return spaceRepository.searchByAddress(searchWord.get());
+    }
+
+    public List<SpaceSearchResponseDto> searchSpace(Optional<String> searchWord) {
+        List<Space> spaces = getResultOfSearch(searchWord);
+
+        List<SpaceSearchResponseDto> result = new ArrayList<>();
+
+        for (Space space : spaces) {
+            result.add(SpaceSearchResponseDto.of(space));
+        }
+        return result;
+    }
+
+    public List<SpaceSearchWithCategoryResponseDto> searchSpaceWithCategoryName(Optional<String> searchWord) {
 
         if (searchWord.isEmpty()) {
             return getResultWithoutSearchWord();
@@ -126,6 +144,7 @@ public class SpaceService {
 
         return result;
     }
+
 
     private String getCategoryNameOfAddress(Space space) {
         String metroGovernment = space.getAddress().getMetroGovernment();

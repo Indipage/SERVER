@@ -61,7 +61,7 @@ public class SpaceController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<SpaceSearchWithCategoryResponseDto>> searchWithAddress(@RequestParam(value = "keyword") Optional<String> searchWord) {
+    public ApiResponse<List<SpaceSearchResponseDto>> searchWithAddress(@RequestParam(value = "keyword") Optional<String> searchWord) {
         return ApiResponse.success(Success.SEARCH_SPACE_SUCCESS, spaceService.searchSpace(searchWord));
     }
 }
