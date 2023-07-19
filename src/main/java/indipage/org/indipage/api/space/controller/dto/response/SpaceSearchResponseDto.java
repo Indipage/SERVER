@@ -12,12 +12,14 @@ public class SpaceSearchResponseDto {
     private Long spaceId;
     private String spaceName;
     private String address;
+    private String imageUrl;
 
     public static SpaceSearchResponseDto of(Space space) {
         return SpaceSearchResponseDto.builder()
                 .spaceId(space.getId())
                 .spaceName(space.getName())
                 .address(space.getAddress().toString())
+                .imageUrl(space.getImageUrl())
                 .build();
     }
 }
