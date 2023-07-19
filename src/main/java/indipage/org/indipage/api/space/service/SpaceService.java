@@ -24,7 +24,7 @@ public class SpaceService {
     private final UserService userService;
     private final ArticleService articleService;
 
-    public SpaceDto readSpace(final Long spaceId) {
+    public SpaceDto  readSpace(final Long spaceId) {
         Space space = findSpace(spaceId);
 
         List<SpaceTagRelation> spaceTagRelations = space.getSpaceTagRelations();
