@@ -1,10 +1,7 @@
 package indipage.org.indipage.api.space.service;
 
 import indipage.org.indipage.api.article.service.ArticleService;
-import indipage.org.indipage.api.space.controller.dto.response.ArticleOfSpaceResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.BookRecommendationResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.FollowSpaceRelationResponseDto;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.space.controller.dto.response.*;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.*;
@@ -14,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,6 +85,54 @@ public class SpaceService {
         return spaceRepository.findById(spaceId).orElseThrow(
                 () -> new NotFoundException(Error.NOT_FOUND_SPACE_EXCEPTION,
                         Error.NOT_FOUND_SPACE_EXCEPTION.getMessage()));
+    }
+
+    private List<SpaceSearchWithCategoryResponseDto> getResultWithoutSearchWord() {
+        List<Space> spaces = spaceRepository.findAll();
+        List<SpaceSearchResponseDto> result = new ArrayList<>();
+
+        for (Space space : spaces) {
+            result.add(SpaceSearchResponseDto.of(space));
+        }
+        return new ArrayList<>(Collections.singletonList(SpaceSearchWithCategoryResponseDto.of("전체", result)));
+    }
+
+    private HashMap<String, List<SpaceSearchResponseDto>> getResultWithSearchWord(final String searchWord) {
+        List<Space> spaces = spaceRepository.searchByAddress(searchWord);
+
+        HashMap<String, List<SpaceSearchResponseDto>> resultMap = new LinkedHashMap<>();
+
+        for (Space space : spaces) {
+            String categoryName = getCategoryNameOfAddress(space);
+
+            List<SpaceSearchResponseDto> resultList = resultMap.computeIfAbsent(categoryName, k -> new ArrayList<>());
+            resultList.add(SpaceSearchResponseDto.of(space));
+        }
+        return resultMap;
+    }
+
+    public List<SpaceSearchWithCategoryResponseDto> searchSpace(Optional<String> searchWord) {
+
+        if (searchWord.isEmpty()) {
+            return getResultWithoutSearchWord();
+        }
+
+        HashMap<String, List<SpaceSearchResponseDto>> resultMap = getResultWithSearchWord(searchWord.get());
+        List<SpaceSearchWithCategoryResponseDto> result = new ArrayList<>();
+
+        for (String key : resultMap.keySet()) {
+            result.add(SpaceSearchWithCategoryResponseDto.of(key, resultMap.get(key)));
+        }
+
+        return result;
+    }
+
+    private String getCategoryNameOfAddress(Space space) {
+        String metroGovernment = space.getAddress().getMetroGovernment();
+        if (metroGovernment.equals("제주") || metroGovernment.equals("세종")) {
+            return metroGovernment;
+        }
+        return space.getAddress().getBaseGovernment();
     }
 
     private boolean isFollowSpace(final Long userId, final Long spaceId) {
