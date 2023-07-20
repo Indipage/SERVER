@@ -15,5 +15,5 @@ public interface ArticleRepository extends Repository<Article, Long> {
 
     Optional<Article> findTop1ByIssueDateIsAfterOrderByIssueDate(LocalDateTime now);
 
-    List<Article> findArticleByIssueDateIsBefore(LocalDateTime now);
+    List<Article> findArticleByIssueDateIsBeforeOrderByIssueDateDesc(LocalDateTime now);
 }
