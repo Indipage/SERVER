@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonInclude(Include.NON_NULL)
 public class SpaceDto {
     private Long id;
     private String name;
