@@ -54,9 +54,9 @@ public class SpaceController {
 
     @PutMapping("/{spaceId}/visit")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse updateVisit(@PathVariable final Long spaceId) {
-        spaceService.visit(1L, spaceId);
-        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS);
+    public ApiResponse<SpaceVisitResponseDto> updateVisit(@PathVariable final Long spaceId) {
+
+        return ApiResponse.success(Success.UPDATE_VISIT_SUCCESS, spaceService.visit(1L, spaceId));
     }
 
     @GetMapping("/list")
