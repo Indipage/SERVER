@@ -2,6 +2,7 @@ package indipage.org.indipage.api.space.service;
 
 import indipage.org.indipage.api.article.service.ArticleService;
 import indipage.org.indipage.api.space.controller.dto.response.*;
+import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.service.UserService;
 import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.*;
@@ -23,8 +24,9 @@ public class SpaceService {
     private final InviteSpaceRelationRepository inviteSpaceRelationRepository;
     private final UserService userService;
     private final ArticleService articleService;
+    private final TicketService ticketService;
 
-    public SpaceDto  readSpace(final Long spaceId) {
+    public SpaceDto readSpace(final Long spaceId) {
         Space space = findSpace(spaceId);
 
         List<SpaceTagRelation> spaceTagRelations = space.getSpaceTagRelations();
@@ -48,7 +50,7 @@ public class SpaceService {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void visit(final Long userId, final Long spaceId) {
+    public SpaceVisitResponseDto visit(final Long userId, final Long spaceId) {
 
         User user = userService.findUser(userId);
         Space space = findSpace(spaceId);
@@ -61,6 +63,9 @@ public class SpaceService {
         // 방문하기
         relation.visit();
         inviteSpaceRelationRepository.save(relation);
+
+        Ticket ticket = ticketService.findTicketWithSpace(space);
+        return SpaceVisitResponseDto.of(ticket);
     }
 
     public FollowSpaceRelationResponseDto readFollowSpace(final Long userId, final Long spaceId) {
