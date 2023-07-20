@@ -6,17 +6,12 @@ import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
-import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bookmark")
