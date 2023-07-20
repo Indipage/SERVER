@@ -2,7 +2,7 @@ package indipage.org.indipage.api.bookmark.controller;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.bookmark.service.BookmarkService;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.space.controller.dto.response.SpaceSummaryResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
@@ -72,7 +72,7 @@ public class BookmarkController {
 
     @GetMapping("/space")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<List<SpaceDto>> readSpaceBookmarkList() {
+    public ApiResponse<List<SpaceSummaryResponseDto>> readSpaceBookmarkList() {
         return ApiResponse.success(Success.READ_SPACE_BOOKMARK_LIST_SUCCESS, bookmarkService.readSpaceBookmarkList(1L));
     }
 
