@@ -2,7 +2,7 @@ package indipage.org.indipage.api.bookmark.service;
 
 import indipage.org.indipage.api.article.controller.dto.response.ArticleSummaryResponseDto;
 import indipage.org.indipage.api.article.service.ArticleService;
-import indipage.org.indipage.api.space.controller.dto.response.SpaceDto;
+import indipage.org.indipage.api.space.controller.dto.response.SpaceSummaryResponseDto;
 import indipage.org.indipage.api.space.service.SpaceService;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
@@ -136,15 +136,15 @@ public class BookmarkService {
         return result;
     }
 
-    public List<SpaceDto> readSpaceBookmarkList(final Long userId) {
+    public List<SpaceSummaryResponseDto> readSpaceBookmarkList(final Long userId) {
         User user = userService.findUser(userId);
-        List<SpaceDto> result = new ArrayList<>();
+        List<SpaceSummaryResponseDto> result = new ArrayList<>();
         List<SpaceBookmarkRelation> bookmarkRelations = spaceBookmarkRelationRepository.findAllByUserOrderByCreatedAtDesc(user);
 
         for (SpaceBookmarkRelation relation : bookmarkRelations) {
             Space space = relation.getSpace();
 
-            result.add(SpaceDto.summaryOf(space));
+            result.add(SpaceSummaryResponseDto.of(space));
         }
 
         return result;

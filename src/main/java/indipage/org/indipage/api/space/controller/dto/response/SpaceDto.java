@@ -1,22 +1,20 @@
 package indipage.org.indipage.api.space.controller.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import indipage.org.indipage.api.tag.controller.dto.response.TagDto;
 import indipage.org.indipage.domain.Space;
 import indipage.org.indipage.domain.SpaceType;
 import indipage.org.indipage.domain.Tag;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@JsonInclude(Include.NON_NULL)
 public class SpaceDto {
     private Long id;
     private String name;
@@ -46,10 +44,5 @@ public class SpaceDto {
                 space.getIntroduction(), space.getPeculiarityTitle(),
                 space.getPeculiarityContent(), space.getPeculiarityImageUrl(),
                 tagList.stream().map(TagDto::of).collect(Collectors.toList()));
-    }
-
-    public static SpaceDto summaryOf(Space space) {
-
-        return new SpaceDto(space.getId(), space.getName(), space.getImageUrl(), space.getAddress().toString());
     }
 }
