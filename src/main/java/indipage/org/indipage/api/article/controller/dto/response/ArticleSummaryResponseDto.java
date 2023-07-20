@@ -1,5 +1,6 @@
 package indipage.org.indipage.api.article.controller.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.Space;
 import lombok.*;
@@ -16,7 +17,10 @@ public class ArticleSummaryResponseDto {
     private String spaceType;
     private Long id;
     private boolean isTicketReceived;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime issueDate;
+
     private String thumbnailUrl;
 
     public static ArticleSummaryResponseDto of(Space space, Article article, boolean isTicketReceived) {

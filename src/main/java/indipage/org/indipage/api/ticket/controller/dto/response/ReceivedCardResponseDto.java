@@ -1,5 +1,6 @@
 package indipage.org.indipage.api.ticket.controller.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
@@ -20,6 +21,7 @@ public class ReceivedCardResponseDto {
 
     private String imageUrl;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime visitedAt;
 
     private Long spaceId;

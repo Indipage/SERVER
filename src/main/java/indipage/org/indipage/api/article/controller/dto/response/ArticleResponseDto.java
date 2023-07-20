@@ -1,5 +1,6 @@
 package indipage.org.indipage.api.article.controller.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.Space;
 import lombok.*;
@@ -15,8 +16,10 @@ public class ArticleResponseDto {
     private Long id;
     private String title;
     private String content;
-    private LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime issueDate;
+
     private String thumbnailUrl;
 
     private Long spaceId;
@@ -27,7 +30,6 @@ public class ArticleResponseDto {
         return ArticleResponseDto.builder().id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .createdAt(article.getCreatedAt())
                 .issueDate(article.getIssueDate())
                 .thumbnailUrl(article.getThumbnailUrl())
                 .spaceId(space.getId())
