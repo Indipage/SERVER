@@ -38,7 +38,7 @@ public class ArticleService {
     }
 
     public List<ArticleSummaryResponseDto> readArticleSummaryList(final Long userId) {
-        List<Article> articles = articleRepository.findArticleByIssueDateIsBefore(LocalDateTime.now());
+        List<Article> articles = articleRepository.findArticleByIssueDateIsBeforeOrderByIssueDateDesc(LocalDateTime.now());
         List<ArticleSummaryResponseDto> result = new ArrayList<>();
         User user = userService.findUser(userId);
 

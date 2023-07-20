@@ -7,24 +7,21 @@ import indipage.org.indipage.api.space.service.SpaceService;
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.IsBookmarkedResponseDto;
 import indipage.org.indipage.api.user.service.UserService;
-import indipage.org.indipage.domain.Article;
-import indipage.org.indipage.domain.ArticleBookmarkRelationRepository;
+import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelationId;
 import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
 import indipage.org.indipage.domain.Relation.SpaceBookmarkRelationId;
-import indipage.org.indipage.domain.Space;
-import indipage.org.indipage.domain.SpaceBookmarkRelationRepository;
-import indipage.org.indipage.domain.User;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -127,7 +124,7 @@ public class BookmarkService {
     public List<ArticleSummaryResponseDto> readArticleBookmarkList(final Long userId) {
         User user = userService.findUser(userId);
         List<ArticleSummaryResponseDto> result = new ArrayList<>();
-        List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUser(user);
+        List<ArticleBookmarkRelation> bookmarkRelations = articleBookmarkRelationRepository.findAllByUserOrderByCreatedAtDesc(user);
 
         for (ArticleBookmarkRelation relation : bookmarkRelations) {
             Article article = relation.getArticle();
@@ -142,7 +139,7 @@ public class BookmarkService {
     public List<SpaceDto> readSpaceBookmarkList(final Long userId) {
         User user = userService.findUser(userId);
         List<SpaceDto> result = new ArrayList<>();
-        List<SpaceBookmarkRelation> bookmarkRelations = spaceBookmarkRelationRepository.findAllByUser(user);
+        List<SpaceBookmarkRelation> bookmarkRelations = spaceBookmarkRelationRepository.findAllByUserOrderByCreatedAtDesc(user);
 
         for (SpaceBookmarkRelation relation : bookmarkRelations) {
             Space space = relation.getSpace();

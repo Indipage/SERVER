@@ -16,5 +16,5 @@ public interface ArticleBookmarkRelationRepository extends
 
     void delete(ArticleBookmarkRelation relation);
 
-    List<ArticleBookmarkRelation> findAllByUser(User user);
+    List<ArticleBookmarkRelation> findAllByUserOrderByCreatedAtDesc(User user);
 }

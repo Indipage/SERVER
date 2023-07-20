@@ -8,7 +8,6 @@ import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketR
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
 import indipage.org.indipage.domain.*;
 import indipage.org.indipage.domain.Relation.InviteSpaceRelation;
-import indipage.org.indipage.domain.Relation.InviteSpaceRelationId;
 import indipage.org.indipage.exception.Error;
 import indipage.org.indipage.exception.model.ConflictException;
 import indipage.org.indipage.exception.model.NotFoundException;
@@ -65,22 +64,6 @@ public class UserService {
 
         // 티켓 수령하기
         inviteSpaceRelationRepository.save(InviteSpaceRelation.newInstance(user, space));
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void visit(final Long userId, final Long spaceId) {
-
-        User user = findUser(userId);
-        Space space = findSpace(spaceId);
-
-        InviteSpaceRelation relation = inviteSpaceRelationRepository.findByInviteSpaceRelationId(
-                InviteSpaceRelationId.newInstance(user, space)).orElseThrow(
-                () -> new NotFoundException(Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION,
-                        Error.NOT_FOUND_TICKET_RECEIVE_EXCEPTION.getMessage()));
-
-        // 방문하기
-        relation.visit();
-        inviteSpaceRelationRepository.save(relation);
     }
 
     private Space findSpace(Long spaceId) {
