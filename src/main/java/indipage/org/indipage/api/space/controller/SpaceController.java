@@ -52,7 +52,7 @@ public class SpaceController {
         return ApiResponse.success(Success.READ_ARTICLE_OF_SPACE_SUCCESS, spaceService.readArticleOfSpace(spaceId));
     }
 
-    @PutMapping("/{spaceId}/visit")
+    @PatchMapping("/{spaceId}/visit")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<SpaceVisitResponseDto> updateVisit(@PathVariable final Long spaceId) {
 
