@@ -20,6 +20,9 @@ public class Ticket {
     @Column(nullable = false)
     private String cardImageUrl;
 
+    @Column(nullable = false)
+    private String ticketForArticleImageUrl;
+
     @OneToOne
     @JoinColumn(name = "space_id")
     private Space space;
