@@ -25,9 +25,6 @@ public class Space {
     private String imageUrl;
 
     @Column(nullable = false)
-    private String roadAddress;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SpaceType type;
 
