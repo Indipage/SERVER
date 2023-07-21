@@ -18,12 +18,14 @@ public class TicketDto {
     private Long id;
     private String ticketImageUrl;
     private String cardImageUrl;
+    private String ticketForArticleImageUrl;
 
     public static TicketDto of(Ticket ticket) {
         return TicketDto.builder()
                 .id(ticket.getId())
                 .ticketImageUrl(ticket.getTicketImageUrl())
                 .cardImageUrl(ticket.getCardImageUrl())
+                .ticketForArticleImageUrl(ticket.getTicketForArticleImageUrl())
                 .build();
     }
 
