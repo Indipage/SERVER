@@ -40,7 +40,7 @@ public class UserController {
         return ApiResponse.success(Success.CREATE_RECEIVE_TICKET_SUCCESS);
     }
 
-    @PutMapping("/weekly/slide")
+    @PatchMapping("/weekly/slide")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse UpdateSlideAt() {
         userService.updateSlideAt(1L);
