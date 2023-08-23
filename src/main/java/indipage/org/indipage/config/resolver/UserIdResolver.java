@@ -1,6 +1,6 @@
 package indipage.org.indipage.config.resolver;
 
-import indipage.org.indipage.auth.JwtService;
+import indipage.org.indipage.auth.JwtProvider;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 @Component
 public class UserIdResolver implements HandlerMethodArgumentResolver {
-    private final JwtService jwtService;
+    private final JwtProvider jwtProvider;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -27,13 +27,13 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         final String token = request.getHeader("Authorization");
 
-        if (!jwtService.verifyToken(token)) {
+        if (!jwtProvider.verifyToken(token)) {
             throw new RuntimeException(
                     String.format("USER_ID를 가져오지 못했습니다. (%s - %s)", parameter.getClass(), parameter.getMethod()));
         }
 
         // 유저 아이디 반환
-        final String tokenContents = jwtService.getJwtContents(token);
+        final String tokenContents = jwtProvider.getJwtContents(token);
         try {
             return Long.parseLong(tokenContents);
         } catch (NumberFormatException e) {

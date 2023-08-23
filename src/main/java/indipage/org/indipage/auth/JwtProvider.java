@@ -14,7 +14,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 
-public class JwtService {
+public class JwtProvider {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
