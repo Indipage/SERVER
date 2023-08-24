@@ -1,6 +1,7 @@
 package indipage.org.indipage.auth.service;
 
 import indipage.org.indipage.auth.Platform;
+import indipage.org.indipage.auth.service.apple.AppleOAuthClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ public class OAuthClientProvider {
 
     private static final Map<Platform, OAuthClient> oAuthClientMap = new HashMap<>();
 
-    private final AppleOauthClient appleOauthClient;
+    private final AppleOAuthClient appleOauthClient;
 
     @PostConstruct
     void initializeOAuthClientMap() {
