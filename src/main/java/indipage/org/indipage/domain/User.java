@@ -26,6 +26,10 @@ public class User extends CreatedTimeBaseEntity {
     private String email;
 
     @Column
+    @Enumerated(value = EnumType.STRING)
+    private String platform;
+
+    @Column
     private LocalDateTime slideAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
