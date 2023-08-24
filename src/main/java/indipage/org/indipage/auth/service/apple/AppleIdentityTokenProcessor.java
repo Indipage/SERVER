@@ -55,4 +55,10 @@ public class AppleIdentityTokenProcessor {
         }
     }
 
+    public boolean validateIdentityToken(Claims claims) {
+        return claims.getIssuer().contains(iss) &&
+                claims.getAudience().equals(clientId) &&
+                encryptUtils.hashWithSHA256(claims.get(NONCE_KEY, String.class)).equals(nonce);
+    }
+
 }
