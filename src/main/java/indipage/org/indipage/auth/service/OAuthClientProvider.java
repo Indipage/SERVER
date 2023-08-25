@@ -22,7 +22,7 @@ public class OAuthClientProvider {
         oAuthClientMap.put(Platform.APPLE, appleOauthClient);
     }
 
-    public OAuthClient getClient(Platform oAuthProvider) {
-        return oAuthClientMap.get(oAuthProvider);
+    public OAuthClient getClient(final String platformName) {
+        return oAuthClientMap.get(Platform.valueOf(platformName));
     }
 }
