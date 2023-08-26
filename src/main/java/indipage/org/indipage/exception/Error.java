@@ -18,6 +18,7 @@ public enum Error {
      * 401 UNAUTHORIZED
      */
     TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
+    INVALID_TOKEN_EXCEPTION(HttpStatus.UNAUTHORIZED, "잘못된 토큰입니다."),
     /**
      * 404 NOT FOUND
      */
