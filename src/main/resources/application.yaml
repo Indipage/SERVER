@@ -59,6 +59,12 @@ springdoc:
 jwt:
   secret: ${jwt-secret}
 
+oauth:
+  apple:
+    iss: ${apple-iss}
+    client-id: ${apple-client-id}
+    nonce: ${apple-nonce}
+
 # set1
 ---
 
@@ -109,6 +115,13 @@ springdoc:
       enabled: true
     cache:
       disabled: true
+
+oauth:
+  apple:
+    iss: ${apple-iss}
+    client-id: ${apple-client-id}
+    nonce: ${apple-nonce}
+
 
 # set2
 ---
