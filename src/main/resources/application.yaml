@@ -8,7 +8,7 @@ spring:
   config:
     activate:
       on-profile: local
-      
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${db-url}
@@ -58,6 +58,12 @@ springdoc:
 
 jwt:
   secret: ${jwt-secret}
+
+oauth:
+  apple:
+    iss: ${apple-iss}
+    client-id: ${apple-client-id}
+    nonce: ${apple-nonce}
 
 # set1
 ---
@@ -110,6 +116,13 @@ springdoc:
     cache:
       disabled: true
 
+oauth:
+  apple:
+    iss: ${apple-iss}
+    client-id: ${apple-client-id}
+    nonce: ${apple-nonce}
+
+
 # set2
 ---
 
@@ -117,7 +130,7 @@ spring:
   config:
     activate:
       on-profile: set2
-      
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${db-url}
@@ -146,6 +159,12 @@ cloud:
       bucket: ${s3-bucket}
     stack:
       auto: false
+
+oauth:
+  apple:
+    iss: ${apple-iss}
+    client-id: ${apple-client-id}
+    nonce: ${apple-nonce}
 
 springdoc:
   packages-to-scan: indipage.org.indipage

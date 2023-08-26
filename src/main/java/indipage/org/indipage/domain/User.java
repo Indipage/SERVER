@@ -1,5 +1,6 @@
 package indipage.org.indipage.domain;
 
+import indipage.org.indipage.auth.Platform;
 import indipage.org.indipage.domain.Relation.ArticleBookmarkRelation;
 import indipage.org.indipage.domain.Relation.SpaceBookmarkRelation;
 import lombok.AccessLevel;
@@ -27,7 +28,7 @@ public class User extends CreatedTimeBaseEntity {
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private String platform;
+    private Platform platform;
 
     @Column
     private LocalDateTime slideAt;
