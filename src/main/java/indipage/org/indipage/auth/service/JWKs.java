@@ -1,4 +1,4 @@
-package indipage.org.indipage.auth.service.apple;
+package indipage.org.indipage.auth.service;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,14 +12,14 @@ import java.util.Optional;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ApplePublicKeys {
+public class JWKs {
 
-    private List<ApplePublicKey> keys;
+    private List<JWKey> keys;
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public class ApplePublicKey {
+    static public class JWKey {
         private String kty;
         private String kid;
         private String use;
@@ -28,8 +28,8 @@ public class ApplePublicKeys {
         private String e;
     }
 
-    public ApplePublicKey getPublicKey(String alg, String kid) {
-        Optional<ApplePublicKey> matchingKey = this.keys
+    public JWKey getRightJWK(String alg, String kid) {
+        Optional<JWKey> matchingKey = this.keys
                 .stream()
                 .filter(k -> k.getAlg().equals(alg) && k.getKid().equals(kid))
                 .findFirst();

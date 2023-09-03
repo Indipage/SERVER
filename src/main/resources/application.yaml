@@ -64,6 +64,8 @@ oauth:
     iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
+  google:
+    client-id: ${google-client-id}
 
 # set1
 ---
@@ -116,12 +118,16 @@ springdoc:
     cache:
       disabled: true
 
+jwt:
+  secret: ${jwt-secret}
+
 oauth:
   apple:
     iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
-
+  google:
+    client-id: ${google-client-id}
 
 # set2
 ---
@@ -160,11 +166,16 @@ cloud:
     stack:
       auto: false
 
+jwt:
+  secret: ${jwt-secret}
+
 oauth:
   apple:
     iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
+  google:
+    client-id: ${google-client-id}
 
 springdoc:
   packages-to-scan: indipage.org.indipage
