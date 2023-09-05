@@ -49,7 +49,7 @@ public class S3Service {
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).build();
     }
 
-    public String uploadIamge(MultipartFile multipartFile, String folder) {
+    public String uploadImage(MultipartFile multipartFile, String folder) {
         String fileName = createFileName(multipartFile.getOriginalFilename());
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getSize());
