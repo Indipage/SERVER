@@ -28,7 +28,7 @@ public class AppleOAuthClient implements OAuthClient {
 
         PublicKey publicKey = publicKeyGenerator.generatePublicKey(header, JWKs);
 
-        Claims claims = identityTokenProcessor.extractClaimsFromIdentityToken(accessToken, publicKey);
+        Claims claims = identityTokenProcessor.extractClaims(accessToken, publicKey);
 
         identityTokenProcessor.validateIdentityToken(claims);
 
