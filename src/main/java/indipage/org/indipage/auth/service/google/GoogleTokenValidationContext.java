@@ -9,6 +9,4 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "oauth.google")
 public class GoogleTokenValidationContext {
     private final String clientId;
-    private final String iss1 = "accounts.google.com";
-    private final String iss2 = "https://accounts.google.com";
 }

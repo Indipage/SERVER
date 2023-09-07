@@ -8,8 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "oauth.apple")
 public class AppleTokenValidationContext {
-
-    private final String iss;
     private final String clientId;
     private final String nonce;
 }
