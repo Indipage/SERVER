@@ -61,7 +61,6 @@ jwt:
 
 oauth:
   apple:
-    iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
   google:
@@ -123,7 +122,6 @@ jwt:
 
 oauth:
   apple:
-    iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
   google:
@@ -171,7 +169,6 @@ jwt:
 
 oauth:
   apple:
-    iss: ${apple-iss}
     client-id: ${apple-client-id}
     nonce: ${apple-nonce}
   google:

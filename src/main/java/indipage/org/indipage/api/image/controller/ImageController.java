@@ -5,15 +5,12 @@ import indipage.org.indipage.api.image.controller.dto.response.ImageCreatedRespo
 import indipage.org.indipage.common.dto.ApiResponse;
 import indipage.org.indipage.exception.Success;
 import indipage.org.indipage.external.client.aws.S3Service;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +24,7 @@ public class ImageController {
     public ApiResponse create(
             @ModelAttribute @Valid final ImageRequestDto request) {
 
-        String imageUrl = s3Service.uploadIamge(request.getImage(), request.getFolder());
+        String imageUrl = s3Service.uploadImage(request.getImage(), request.getFolder());
         return ApiResponse.success(Success.CREATE_IMAGE_SUCCESS, ImageCreatedResponseDto.of(imageUrl));
     }
 
