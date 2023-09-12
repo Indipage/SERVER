@@ -29,7 +29,7 @@ public class GoogleOAuthClient implements OAuthClient {
         PublicKey publicKey = publicKeyGenerator.generatePublicKey(header, googlePublicKeys);
 
         Claims claims = tokenProcessor.extractClaims(idToken, publicKey);
-
+        tokenProcessor.validate(claims);
         return OAuthUserResponseDto.generateAppleUserResponseDto(claims.get("email", String.class));
     }
 
