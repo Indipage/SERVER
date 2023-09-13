@@ -20,6 +20,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
+    @Transactional
     public LoginResponseDto login(final LoginRequestDto requestDto) {
         OAuthClient client = clientProvider.getClient(requestDto.getPlatform());
         OAuthUserResponseDto responseDto = client.getUser(requestDto.getAccessToken());
@@ -28,14 +29,10 @@ public class AuthService {
                 .map(user -> jwtProvider.issuedToken((user.getId())))
                 .orElse(singUp(requestDto.getPlatform(), responseDto));
 
-        if (accessToken.isEmpty()) {
-            userRepository.save(
-                    User.of(responseDto.getEmail(), responseDto.getName(), requestDto.getPlatform()));
-        }
-
         return LoginResponseDto.of(accessToken);
     }
 
+    @Transactional
     public String singUp(final Platform platform, final OAuthUserResponseDto responseDto) {
         User user = userRepository.save(
                 User.of(responseDto.getEmail(), responseDto.getName(), platform));
