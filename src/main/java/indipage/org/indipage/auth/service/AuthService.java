@@ -27,13 +27,13 @@ public class AuthService {
 
         String accessToken = userRepository.findByEmailAndName(responseDto.getEmail(), responseDto.getName())
                 .map(user -> jwtProvider.issuedToken((user.getId())))
-                .orElse(singUp(requestDto.getPlatform(), responseDto));
+                .orElseGet(() -> signUp(requestDto.getPlatform(), responseDto));
 
         return LoginResponseDto.of(accessToken);
     }
 
     @Transactional
-    public String singUp(final Platform platform, final OAuthUserResponseDto responseDto) {
+    public String signUp(final Platform platform, final OAuthUserResponseDto responseDto) {
         User user = userRepository.save(
                 User.of(responseDto.getEmail(), responseDto.getName(), platform));
 
