@@ -1,7 +1,10 @@
 package indipage.org.indipage.api.auth.controller;
 
 import indipage.org.indipage.api.auth.dto.request.LoginRequestDto;
+import indipage.org.indipage.api.auth.dto.response.LoginResponseDto;
 import indipage.org.indipage.auth.service.AuthService;
+import indipage.org.indipage.common.dto.ApiResponse;
+import indipage.org.indipage.exception.Success;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +22,10 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public void login(
+    public ApiResponse<LoginResponseDto> login(
             @RequestBody LoginRequestDto requestDto
     ) {
-        authService.login(requestDto);
+        return ApiResponse.success(Success.LOGIN_SUCCESS, authService.login(requestDto));
     }
 
 }
