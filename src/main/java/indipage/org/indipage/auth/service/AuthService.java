@@ -25,7 +25,7 @@ public class AuthService {
         OAuthClient client = clientProvider.getClient(requestDto.getPlatform());
         OAuthUserResponseDto responseDto = client.getUser(requestDto.getAccessToken());
 
-        String accessToken = userRepository.findByEmailAndName(responseDto.getEmail(), responseDto.getName())
+        String accessToken = userRepository.findByEmail(responseDto.getEmail())
                 .map(user -> jwtProvider.issuedToken((user.getId())))
                 .orElseGet(() -> signUp(requestDto.getPlatform(), responseDto));
 

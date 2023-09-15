@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository;
 public interface UserRepository extends Repository<User, Long> {
     Optional<User> findById(Long id);
 
-    Optional<User> findByEmailAndName(String email, String name);
+    Optional<User> findByEmail(String email);
 
     User save(User user);
 }
