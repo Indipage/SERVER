@@ -4,6 +4,8 @@ import indipage.org.indipage.auth.dto.OAuthUserResponseDto;
 import indipage.org.indipage.auth.service.JWKs;
 import indipage.org.indipage.auth.service.OAuthClient;
 import indipage.org.indipage.auth.service.PublicKeyGenerator;
+import indipage.org.indipage.exception.Error;
+import indipage.org.indipage.exception.model.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -30,7 +32,9 @@ public class AppleOAuthClient implements OAuthClient {
 
         Claims claims = identityTokenProcessor.extractClaims(accessToken, publicKey);
 
-        identityTokenProcessor.validateIdentityToken(claims);
+        if (!identityTokenProcessor.validateIdentityToken(claims)) {
+            throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION, Error.INVALID_TOKEN_EXCEPTION.getMessage());
+        }
 
         return OAuthUserResponseDto.generateAppleUserResponseDto(claims.get("email", String.class));
     }
