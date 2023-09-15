@@ -25,7 +25,7 @@ public class OAuthClientProvider {
         oAuthClientMap.put(Platform.GOOGLE, googleOAuthClient);
     }
 
-    public OAuthClient getClient(final String platformName) {
-        return oAuthClientMap.get(Platform.valueOf(platformName));
+    public OAuthClient getClient(final Platform platformName) {
+        return oAuthClientMap.get(platformName);
     }
 }

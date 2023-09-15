@@ -1,7 +1,12 @@
 package indipage.org.indipage.auth.service;
 
+import indipage.org.indipage.api.auth.dto.request.LoginRequestDto;
+import indipage.org.indipage.api.auth.dto.response.LoginResponseDto;
 import indipage.org.indipage.auth.JwtProvider;
+import indipage.org.indipage.auth.Platform;
 import indipage.org.indipage.auth.dto.OAuthUserResponseDto;
+import indipage.org.indipage.domain.User;
+import indipage.org.indipage.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +17,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final OAuthClientProvider clientProvider;
+    private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    public void login(final String platform, final String accessToken) {
-        OAuthClient client = clientProvider.getClient(platform);
-        OAuthUserResponseDto oAuthUserResponseDto = client.getUser(accessToken);
+    @Transactional
+    public LoginResponseDto login(final LoginRequestDto requestDto) {
+        OAuthClient client = clientProvider.getClient(requestDto.getPlatform());
+        OAuthUserResponseDto responseDto = client.getUser(requestDto.getAccessToken());
 
-        // TODO: 회원가입, 로그인 및 토큰 반환 기능 구현
+        String accessToken = userRepository.findByEmail(responseDto.getEmail())
+                .map(user -> jwtProvider.issuedToken((user.getId()).toString()))
+                .orElseGet(() -> signUp(requestDto.getPlatform(), responseDto));
+
+        return LoginResponseDto.of(accessToken);
+    }
+
+    @Transactional
+    public String signUp(final Platform platform, final OAuthUserResponseDto responseDto) {
+        User user = userRepository.save(
+                User.of(responseDto.getEmail(), responseDto.getName(), platform));
+
+        return jwtProvider.issuedToken(user.getId().toString());
     }
 
 }
