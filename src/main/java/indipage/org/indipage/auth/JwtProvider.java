@@ -26,11 +26,11 @@ public class JwtProvider {
         jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String issuedToken(Long userId) {
+    public String issuedToken(String userId) {
         final Date now = new Date();
 
         final Claims claims = Jwts.claims().setSubject("access_token").setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + 120 * 60 * 1000L));
+                .setExpiration(new Date(now.getTime() + 3 * 60 * 1000L));
 
         claims.put("userId", userId);
 
@@ -46,25 +46,31 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public boolean verifyToken(String token) {
+    private String verifyToken(final String token) {
         try {
-            final Claims claims = getBody(token);
-            return true;
+            if (!token.startsWith("Bearer ")) {
+                throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION,
+                        Error.INVALID_TOKEN_EXCEPTION.getMessage());
+            }
+
+            return token.substring(7);
         } catch (RuntimeException e) {
             if (e instanceof ExpiredJwtException) {
                 throw new UnauthorizedException(Error.TOKEN_TIME_EXPIRED_EXCEPTION,
                         Error.TOKEN_TIME_EXPIRED_EXCEPTION.getMessage());
 
             }
-            return false;
+            throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION, Error.INTERNAL_SERVER_ERROR.getMessage());
         }
     }
 
     private Claims getBody(final String token) {
+        String verifiedToken = verifyToken(token);
+
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(verifiedToken)
                 .getBody();
     }
 
