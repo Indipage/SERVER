@@ -26,7 +26,7 @@ public class AuthService {
         OAuthUserResponseDto responseDto = client.getUser(requestDto.getAccessToken());
 
         String accessToken = userRepository.findByEmail(responseDto.getEmail())
-                .map(user -> jwtProvider.issuedToken((user.getId())))
+                .map(user -> jwtProvider.issuedToken((user.getId()).toString()))
                 .orElseGet(() -> signUp(requestDto.getPlatform(), responseDto));
 
         return LoginResponseDto.of(accessToken);
@@ -37,7 +37,7 @@ public class AuthService {
         User user = userRepository.save(
                 User.of(responseDto.getEmail(), responseDto.getName(), platform));
 
-        return jwtProvider.issuedToken(user.getId());
+        return jwtProvider.issuedToken(user.getId().toString());
     }
 
 }
