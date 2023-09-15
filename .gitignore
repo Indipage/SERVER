@@ -166,3 +166,6 @@ gradle-app.setting
 # pplication.yaml
 
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij
+
+# yaml 파일
+src/main/resources/*
