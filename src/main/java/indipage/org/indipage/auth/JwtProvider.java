@@ -47,31 +47,29 @@ public class JwtProvider {
     }
 
     private String verifyToken(final String token) {
-        try {
             if (!token.startsWith("Bearer ")) {
                 throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION,
                         Error.INVALID_TOKEN_EXCEPTION.getMessage());
             }
 
             return token.substring(7);
-        } catch (RuntimeException e) {
-            if (e instanceof ExpiredJwtException) {
-                throw new UnauthorizedException(Error.TOKEN_TIME_EXPIRED_EXCEPTION,
-                        Error.TOKEN_TIME_EXPIRED_EXCEPTION.getMessage());
-
-            }
-            throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION, Error.INTERNAL_SERVER_ERROR.getMessage());
-        }
     }
 
     private Claims getBody(final String token) {
         String verifiedToken = verifyToken(token);
 
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(verifiedToken)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(verifiedToken)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new UnauthorizedException(Error.TOKEN_TIME_EXPIRED_EXCEPTION, Error.TOKEN_TIME_EXPIRED_EXCEPTION.getMessage());
+
+        } catch ( RuntimeException e ) {
+            throw new UnauthorizedException(Error.INVALID_TOKEN_EXCEPTION, Error.INTERNAL_SERVER_ERROR.getMessage());
+        }
     }
 
     public String getJwtContents(String token) {
