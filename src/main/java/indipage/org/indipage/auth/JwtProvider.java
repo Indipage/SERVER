@@ -30,7 +30,7 @@ public class JwtProvider {
         final Date now = new Date();
 
         final Claims claims = Jwts.claims().setSubject("access_token").setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + 1 * 60 * 1000L));
+                .setExpiration(new Date(now.getTime() + 14 * 24 * 216000 * 1000L));
 
         claims.put("userId", userId);
 
