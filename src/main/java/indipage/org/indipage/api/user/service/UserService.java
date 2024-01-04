@@ -6,7 +6,6 @@ import indipage.org.indipage.api.ticket.controller.dto.response.ReceivedTicketRe
 import indipage.org.indipage.api.ticket.service.TicketService;
 import indipage.org.indipage.api.user.controller.dto.response.HasReceivedTicketResponseDto;
 import indipage.org.indipage.api.user.controller.dto.response.UserDto;
-import indipage.org.indipage.auth.Platform;
 import indipage.org.indipage.domain.Article;
 import indipage.org.indipage.domain.ArticleRepository;
 import indipage.org.indipage.domain.InviteSpaceRelationRepository;
@@ -22,7 +21,6 @@ import indipage.org.indipage.exception.model.NotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -125,7 +123,14 @@ public class UserService {
         LocalDateTime now = LocalDateTime.now();
 
         Article articleOfThisWeek = findArticleOfThisWeek(now);
-        return HasSlideWeeklyArticleResponseDto.of(user.getSlideAt().isAfter(articleOfThisWeek.getIssueDate()));
+        return HasSlideWeeklyArticleResponseDto.of(checkSlideDateOfUser(user, articleOfThisWeek));
+    }
+
+    private boolean checkSlideDateOfUser(final User user, final Article articleOfThisWeek) {
+        if (user.getSlideAt() == null) {
+            return false;
+        }
+        return user.getSlideAt().isAfter(articleOfThisWeek.getIssueDate());
     }
 
     public Article findArticleOfThisWeek(LocalDateTime now) {
